@@ -1,0 +1,16 @@
+{
+  "name": "partsapp",
+  "version": "0.0.1",
+  "description": "An application to keep track of parts inventory, invoices, etc",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Godson",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.4.15",
+    "shopify-liquid": "^1.7.1"
+  }
+}

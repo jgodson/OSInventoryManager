@@ -1,0 +1,9 @@
+{
+  "paths": {
+    "base_views_folder": "views",
+    "templates_folder": "templates",
+    "snippets_folder": "snippets",
+    "base_components_folder": "app_components",
+    "base_config_folder": "config"
+  }
+}
