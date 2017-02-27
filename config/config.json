@@ -1,9 +1,12 @@
 {
   "paths": {
     "base_views_folder": "views",
-    "templates_folder": "templates",
-    "snippets_folder": "snippets",
+    "templates_folder": "views/templates",
+    "snippets_folder": "views/snippets",
     "base_components_folder": "app_components",
-    "base_config_folder": "config"
+    "libs_folder": "app_components/libs",
+    "base_assets_folder": "assets",
+    "css_folder": "assets/css",
+    "liquid_css_folder": "assets/css/liquid-css"
   }
 }

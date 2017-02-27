@@ -8,9 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jason Godson",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "dependencies": {
     "electron": "^1.4.15",
+    "electron-reload": "^1.1.0",
+    "jquery": "^3.1.1",
     "shopify-liquid": "^1.7.1"
-  }
+  },
+  "devDependencies": {}
 }

@@ -2,6 +2,9 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
+// For auto reload during development
+require('electron-reload')(__dirname);
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;

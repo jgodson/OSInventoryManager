@@ -1,0 +1,25 @@
+[{
+  "name": "company",
+  "settings": [{
+    "type": "header",
+    "content": "These are settings specific to your company"
+  }, {
+    "type": "paragraph",
+    "content": "These will affect information displayed in the app, invoices, etc."
+  }, {
+    "type": "text",
+    "id": "name",
+    "label": "Name of your company",
+    "info": "Enter the name of your company"
+  }]
+}, {
+  "name": "main_colors",
+  "settings": [{
+    "type": "header",
+    "content": "This will change the colors for parts of the app"
+  }, {
+    "type": "color",
+    "id": "nav_color",
+    "label": "Nav Bar Color"
+  }]
+}]

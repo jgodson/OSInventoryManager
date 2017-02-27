@@ -1,7 +1,8 @@
-const config = require('../config/config.json');
+const config = require('./app_config');
 const render = require(`./render`);
+const appRoot = document.querySelector('#app-root');
 
-render('template')
+render('template', {name: "Jason"})
   .then(html => {
-    document.write(html);
+    appRoot.innerHTML = html;
   });

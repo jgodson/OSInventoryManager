@@ -1,19 +1,29 @@
-const config = require('../config/config.json');
-const settings = require(`../config/app_settings.json`);
+const config = require('./app_config');
 const path = require('path');
 
-const f_views = `../${config.paths.base_views_folder}`;
-const f_templates = `${f_views}/${config.paths.templates_folder}`;
-const f_snippets = `${f_views}/${config.paths.snippets_folder}`
+// Global app settings will be available in any template rendered
+const settings = require(`../config/settings_data.json`);
+// Add the app config settings to the global settings object
+settings.config = config;
+
+// Set up folders for liquid files
+const f_css = `${config.liquid_css_folder}`
 
 const Liquid = require('shopify-liquid');
 const engine = Liquid({
-    root: [path.resolve(__dirname, f_templates), path.resolve(__dirname, f_snippets)],  // dirs to lookup layouts/includes
-    extname: '.liquid' // the default extname used for layouts/includes
+  root: [path.resolve(__dirname, `../${config.paths.templates_folder}`),
+    path.resolve(__dirname, `../${config.paths.snippets_folder}`),
+    path.resolve(__dirname, `../${config.paths.liquid_css_folder}`)],  // dirs to lookup layouts/includes
+  extname: '.liquid' // the default extname used for layouts/includes
 });
 
+// File specific options can be passed in as a second argument when calling this
 function render(fileName, options) {
-  return engine.renderFile(fileName, {settings: settings, options: options});
+  // Return a promise with a catch all error handler
+  return engine.renderFile(fileName, {settings: settings, options: options})
+    .catch(error => {
+      console.error(error);
+    });
 }
 
 module.exports = render;
