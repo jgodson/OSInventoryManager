@@ -20,7 +20,7 @@ const engine = Liquid({
 // File specific options can be passed in as a second argument when calling this
 function render(fileName, options) {
   // Return a promise with a catch all error handler
-  return engine.renderFile(fileName, {settings: settings, options: options})
+  return engine.renderFile(fileName, { settings: settings, options: options, template: fileName })
     .catch(error => {
       console.error(error);
     });

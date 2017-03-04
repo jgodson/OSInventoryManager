@@ -1,1 +1,27 @@
 /* For app specific CSS that doesn't need to change based on settings */
+#app-body {
+  padding: 0 10px;
+}
+
+.navbar .navbar-brand {
+  height: 50px;
+}
+
+form.navbar-form.navbar-right {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+form.navbar-form.navbar-right .btn-default {
+  color: inherit;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+form.navbar-form.navbar-right .btn-default:hover {
+  background-color: transparent;
+}
+
+.navbar-nav li .glyphicon {
+  margin-right: 10px;
+}

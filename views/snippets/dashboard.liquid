@@ -1,0 +1,9 @@
+<div id='template__{{ template }}'>
+  {% if options.user %}
+    <p>Hello {% if options.user.name %}{{ options.user.name }}!{% else %}Liquid!{% endif %}</p>
+    <div>Glyphicons working? <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
+    <div>Material Icons working?<i class="material-icons">done</i></div>
+  {% else %}
+    <p>Please <a href="/login">Log In</a> To Continue</p>
+  {% endif %}
+</div>

@@ -2,9 +2,6 @@
   "company": {
     "name": "Development Company"
   },
-  "app": {
-    "is_working": true
-  },
   "main_colors": {
     "nav_color": "#65ade0"
   }
