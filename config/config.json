@@ -7,6 +7,16 @@
     "libs_folder": "app_components/libs",
     "base_assets_folder": "assets",
     "css_folder": "assets/css",
-    "liquid_css_folder": "assets/css/liquid-css"
+    "liquid_css_folder": "assets/css/liquid-css",
+    "data_folder": "data",
+    "models_folder": "data/models"
+  },
+  "database": {
+    "db": "database",
+    "password": "password",
+    "username": "username",
+    "host": "localhost",
+    "dialect": "sqlite",
+    "path": "../data/app_data/db.sqlite"
   }
 }

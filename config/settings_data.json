@@ -4,5 +4,8 @@
   },
   "main_colors": {
     "nav_color": "#65ade0"
+  },
+  "database": {
+    "database_password": "pleasechangeme"
   }
 }

@@ -22,4 +22,15 @@
     "id": "nav_color",
     "label": "Nav Bar Color"
   }]
+}, {
+  "name": "database",
+  "settings": [{
+    "type": "header",
+    "content": "These are important settings specific to your app"
+  }, {
+    "type": "text",
+    "id": "database_password",
+    "label": "Password for App Database",
+    "default": "pleasechangeme"
+  }]
 }]
