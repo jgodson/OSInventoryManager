@@ -6,6 +6,8 @@
     "nav_color": "#65ade0"
   },
   "database": {
-    "database_password": "pleasechangeme"
+    "name": "app_db",
+    "username": "app",
+    "password": "pleasechangeme"
   }
 }

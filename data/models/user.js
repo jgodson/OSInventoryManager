@@ -1,20 +1,18 @@
-const User = {
-  "title": "user schema",
-  "version": 0,
-  "description": "describes a user",
-  "type": "object",
-  "properties": {
-    "id": {
-      "type": "number",
-      "primary": true
-    },
-    "firstName": {
-      "type": "string"
-    }, 
-    "lastName": {
-      "type": "string"
-    }
+const Sequelize = require('sequelize');
+const sequelize = require('../db');
+
+const User = sequelize.define('user', {
+  username: {
+    type: Sequelize.STRING
+  },
+  firstName: {
+    type: Sequelize.STRING
+  },
+  lastName: {
+    type: Sequelize.STRING
   }
-}
+}, {
+  freezeTableName: true // Model tableName will be the same as the model name
+});
 
 module.exports = User;

@@ -7,7 +7,7 @@ function handleNavigation(evt) {
   var action = $(this).attr('href').replace('/', '');
   console.log(action);
   try {
-    routes[action];
+    routes[action].call();
   } catch (e) {
     console.error(e);
   }
