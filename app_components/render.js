@@ -8,13 +8,15 @@ const settings = require(`../${config.paths.config_folder}/settings_data.json`);
 settings.config = config;
 
 // Set up folders for liquid files
-const f_css = `${config.liquid_css_folder}`
+const folders = {
+  templates: path.resolve(__dirname, `../${config.paths.templates_folder}`),
+  css: path.resolve(__dirname, `../${config.paths.liquid_css_folder}`),
+  snippets: path.resolve(__dirname, `../${config.paths.snippets_folder}`)
+}
 
 const Liquid = require('shopify-liquid');
 const engine = Liquid({
-  root: [path.resolve(__dirname, `../${config.paths.templates_folder}`),
-    path.resolve(__dirname, `../${config.paths.snippets_folder}`),
-    path.resolve(__dirname, `../${config.paths.liquid_css_folder}`)],  // dirs to lookup layouts/includes
+  root: [folders.templates, folders.snippets, folders.css],  // dirs to lookup layouts/includes
   extname: '.liquid' // the default extname used for layouts/includes
 });
 

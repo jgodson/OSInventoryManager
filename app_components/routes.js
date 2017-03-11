@@ -1,10 +1,21 @@
 const config = require('./app_config');
-const DB = require(`../${config.paths.data_folder}/db_actions`)
+const render = require(path.join(__dirname, `render`));
 
 const routes = {
-  login: () => {
-    DB.createUser("Jason Godson");
+  index: () => {
+    handleNavRoute('index');
+  },
+  settings: () => {
+    handleNavRoute('settings');
+  },
+  customers: () => {
+    handleNavRoute('customers');
   }
+}
+
+function handleNavRoute(templateName) {
+  render(templateName)
+      .then(html => visualizer.emit('rendercomplete', html));
 }
 
 module.exports = routes;
