@@ -1,16 +1,17 @@
 {
   "paths": {
-    "base_views_folder": "views",
+    "views_folder": "views",
     "templates_folder": "views/templates",
     "snippets_folder": "views/snippets",
-    "base_components_folder": "app_components",
+    "components_folder": "app_components",
     "libs_folder": "app_components/libs",
-    "base_assets_folder": "assets",
+    "assets_folder": "assets",
     "css_folder": "assets/css",
     "liquid_css_folder": "assets/css/liquid-css",
     "data_folder": "data",
-    "app_data": "app_data",
-    "models_folder": "data/models"
+    "app_data": "data/app_data",
+    "models_folder": "data/models",
+    "config_folder": "config"
   },
   "database": {
     "host": "localhost",

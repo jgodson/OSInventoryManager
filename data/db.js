@@ -1,5 +1,6 @@
-const settings = require(`../config/settings_data.json`);
-const config = require('../config/config.json');
+const path = require('path');
+const settings = require(path.join(__dirname, '../config/settings_data.json'));
+const config = require(path.join(__dirname, '../config/config.json'));
 const dbPassword = settings.database.password;
 const dbName = settings.database.name;
 const dbUser = settings.database.user;
@@ -11,10 +12,10 @@ const sequelizeDB = new Sequelize(dbName, dbUser, dbPassword, {
   pool: {
     max: 5,
     min: 1,
-    idle: 1000
+    idle: 10000
   },
   // SQLite only
-  storage: `../${config.paths.app_data}/${dbName}.${config.database.file_ext}`
+  storage: `./${config.paths.app_data}/${dbName}.${config.database.file_ext}`
 });
-console.log(`../${config.paths.app_data}/${dbName}.${config.database.file_ext}`);
+
 module.exports = sequelizeDB;

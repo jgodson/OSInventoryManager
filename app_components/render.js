@@ -1,8 +1,9 @@
-const config = require('./app_config');
 const path = require('path');
+const config = require(path.join(__dirname, 'app_config'));
 
 // Global app settings will be available in any template rendered
-const settings = require(`../config/settings_data.json`);
+const settings = require(`../${config.paths.config_folder}/settings_data.json`);
+
 // Add the app config settings to the global settings object
 settings.config = config;
 

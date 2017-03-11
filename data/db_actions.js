@@ -1,4 +1,5 @@
-const config = require('../app_components/app_config');
+const path = require('path');
+const config = require(path.join(__dirname, '../app_components/app_config'));
 
 // Database
 const DB = require('./db');
@@ -8,8 +9,12 @@ const User = require(`../${config.paths.models_folder}/user`);
 
 // User functions
 function createUser(name, details) {
-  console.log(name, details);
-  let username = details.username || name.join('').toLowerCase();
+  let username;
+  if (typeof details == 'object' && details.username) {
+    username = details.username;
+  } else {
+    username = name.replace(/\b\s+\b/g, '').toLowerCase();
+  }
   name = name.trim().split(' ');
   User.sync({force: true}).then(()=> {
     // Table created
