@@ -8,11 +8,17 @@ const routes = {
   index() {
     handleNavRoute('index');
   },
+  parts() {
+    handleNavRoute('parts');
+  },
   settings() {
     handleNavRoute('settings');
   },
-  customers() {
+  customers(params) {
     handleNavRoute('customers');
+  },
+  goBack() {
+    handleGoBack();
   },
   cancel() {
     handleGoBack();
@@ -26,21 +32,19 @@ function handleNoRoute(action) {
   console.warn(`[Missing Route] ${action}`);
 }
 
-function handleNavRoute(templateName, add = true) {
-  if (add) {
+function handleNavRoute(templateName) {
+  if (history[history.length] !== templateName) {
     addToHistory(templateName);
+    render(templateName)
+        .then(html => visualizer.emit('rendercomplete', html));
   }
-  render(templateName)
-      .then(html => visualizer.emit('rendercomplete', html));
 }
 
 function handleGoBack() {
-  console.log('history', history);
-  handleNavRoute(history[length - 1] || history[0], false);
+  handleNavRoute(history[length - 1] || history[0]);
 }
 
 function addToHistory(templateName) {
-  console.log('addToHistory', templateName);
   if ( history.length < 2 ) {
     history.push(templateName);
   } else {

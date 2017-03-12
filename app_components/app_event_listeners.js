@@ -14,3 +14,11 @@ $(document).on('click', 'a[href]:not(a[href="#"])', function(evt) {
   evt.preventDefault();
   handlers.navigation(evt);
 });
+
+$(document).on('click', '[type="submit"]', function(evt) {
+  evt.preventDefault();
+  let $form = $(this).closest('form');
+  let action = $form.attr('action');
+  let data = $form.serialize();
+  handlers.form(action, data);
+});
