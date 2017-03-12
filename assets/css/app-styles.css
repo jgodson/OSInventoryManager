@@ -34,6 +34,10 @@ form.navbar-form.navbar-right .btn-default:hover {
   color: black !important;
 }
 
+#subheader {
+  margin-top: -20px;
+}
+
 #subheader a {
   color: white;
 }

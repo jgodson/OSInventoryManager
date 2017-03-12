@@ -6,17 +6,27 @@ const routes = require(`../${config.paths.components_folder}/routes`);
 
 function handleNavigation(evt) {
   let action = $(evt.target).attr('href') || $(evt.target).parent().attr('href');
-  action = action.replace(/\//g, '_');
+  action = replaceSlash(action);
   try {
     console.info(`[Route Called] ${action}`);
-    routes[action].call();
+    routes[action]();
   } catch (err) {
     routes.noRoute(action);
   }
 }
 
 function handleFormSubmit(formAction, formData) {
-  console.log(formAction, formData);
+  formAction = replaceSlash(formAction);
+  try {
+    console.info(`[Form Submit] ${formAction}`);
+    routes.forms[formAction](formData)
+  } catch (err) {
+    routes.noRoute(formAction);
+  }
+}
+
+function replaceSlash(action) {
+  return action.replace(/\//g, '_');
 }
 
 function handleSearch(data) {

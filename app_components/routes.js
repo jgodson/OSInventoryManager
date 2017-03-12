@@ -1,9 +1,11 @@
 const config = require(path.join(__dirname, 'app_config'));
 const render = require(path.join(__dirname, `render`));
+const file = require(path.join(__dirname, 'file_ops'));
 
 // Keep track of last page that user was on (for cancel/go back commands)
 let history = [];
 
+// Regular Links
 const routes = {
   index() {
     handleNavRoute('index');
@@ -14,7 +16,7 @@ const routes = {
   settings() {
     handleNavRoute('settings');
   },
-  customers(params) {
+  customers() {
     handleNavRoute('customers');
   },
   goBack() {
@@ -25,6 +27,13 @@ const routes = {
   },
   noRoute(action) {
     handleNoRoute(action);
+  }
+}
+
+// Form Submissions
+routes.forms = {
+  settings_save(formData) {
+    handleSettingsSave(formData);
   }
 }
 
@@ -40,6 +49,10 @@ function handleNavRoute(templateName) {
   }
 }
 
+function handleSettingsSave(formData) {
+  file.writeSettings(formData);
+}
+
 function handleGoBack() {
   handleNavRoute(history[length - 1] || history[0]);
 }
@@ -51,7 +64,6 @@ function addToHistory(templateName) {
     history.shift();
     history.push(templateName)
   }
-    console.log(history);
 }
 
 module.exports = routes;

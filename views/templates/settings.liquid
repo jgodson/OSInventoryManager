@@ -1,9 +1,11 @@
 {% include 'header' %}
 
-{% include 'settings-subheader' %}
+{% include 'save-cancel_form', section: "start" %}
 
 <div class="settings__list">
   {% for setting in options.schema %}
     {% include 'setting', setting: setting, current: settings[setting.name] %}
   {% endfor %}
 </div>
+
+{% include 'save-cancel_form', section: "end" %}

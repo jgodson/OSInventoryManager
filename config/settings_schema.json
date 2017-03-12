@@ -20,7 +20,8 @@
   }, {
     "type": "color",
     "id": "nav_color",
-    "label": "Nav Bar Color"
+    "label": "Nav Bar Color",
+    "default": "#009688"
   }]
 }, {
   "name": "database",
@@ -29,7 +30,7 @@
     "content": "These are important settings specific to your app"
   }, {
     "type": "text",
-    "id": "password",
+    "id": "name",
     "label": "Name of Database File",
     "default": "app_db"
   }, {
