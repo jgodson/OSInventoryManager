@@ -5,16 +5,15 @@ const User = require(`../${config.paths.models_folder}/user`);
 const routes = require(`../${config.paths.components_folder}/routes`);
 
 function handleNavigation(evt) {
-  evt.preventDefault();
-  var action = $(this).attr('href').replace('/', '');
+  var action = $(evt.target).attr('href') || $(evt.target).parent().attr('href');
   console.info(`[Route Called] ${action}`);
   if (typeof routes[action] === 'function') {
     routes[action].call();
   } else {
-    console.warn(`[Missing Route] ${action}`);
+    routes.noRoute(action);
   }
 }
 
 module.exports = {
-  handleNavigation: handleNavigation
+  navigation: handleNavigation
 }

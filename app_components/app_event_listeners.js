@@ -7,7 +7,10 @@ const visualizer = new EventEmitter();
 
 // Shows rendered html on the page
 visualizer.on('rendercomplete', function(html) {
-    appRoot.innerHTML = html;
+  appRoot.innerHTML = html;
 });
 
-$(document).on('click', 'a[href]:not(a[href="#"])', handlers.handleNavigation);
+$(document).on('click', 'a[href]:not(a[href="#"])', function(evt) {
+  evt.preventDefault();
+  handlers.navigation(evt);
+});

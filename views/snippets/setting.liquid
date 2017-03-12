@@ -7,17 +7,25 @@
       {% when 'paragraph' %}
         <p>{{ this.content }}</p>
       {% when 'text' %}
-        <label for="{{ this.id }}">{{ this.label }}</label>
-        <input name="{{ this.id }}" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="settings__field">
+          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        </div>
       {% when 'color' %}
-        <label for="{{ this.id }}">{{ this.label }}</label>
-        <input name="{{ this.id }}" type="color" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="settings__field">
+          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" type="color" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        </div>
       {% when 'password' %}
-        <label for="{{ this.id }}">{{ this.label }}</label>
-        <input name="{{ this.id }}" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="settings__field">
+          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" type="password" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        </div>
       {% when 'number' %}
-        <label for="{{ this.id }}">{{ this.label }}</label>
-        <input name="{{ this.id }}" type="number" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="settings__field">
+          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" type="number" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        </div>
     {% endcase %}
   {% endfor %}
 </div>

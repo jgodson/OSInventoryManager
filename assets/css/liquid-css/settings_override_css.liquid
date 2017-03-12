@@ -4,4 +4,8 @@
     background-color: {{ settings.main_colors.nav_color }};
   }
 
+  .action__buttons {
+    background-color: {{ settings.main_colors.nav_color | default: "#009688"}} !important;
+  }
+
 </style>

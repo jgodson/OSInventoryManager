@@ -1,6 +1,10 @@
 /* For app specific CSS that doesn't need to change based on settings */
-#app-body {
-  padding: 0 10px;
+#app-root > div {
+  padding: 0 20px;
+}
+
+#app-main-nav {
+  margin-bottom: 0px;
 }
 
 .navbar .navbar-brand {
@@ -26,6 +30,32 @@ form.navbar-form.navbar-right .btn-default:hover {
   margin-right: 10px;
 }
 
-#subheader {
-  margin-top: -20px;
+.navbar-nav li a:hover {
+  color: black !important;
+}
+
+#subheader a {
+  color: white;
+}
+
+#subheader a:hover {
+  background-color: inherit;
+}
+
+.action__buttons {
+  border-bottom-left-radius: 4px;
+}
+
+.action__buttons li a:focus {
+  background-color: inherit;
+}
+
+.float-right {
+  float: right;
+}
+
+@media screen and (max-width: 767px) {
+  .action__buttons {
+    padding: 0 20px;
+  }
 }

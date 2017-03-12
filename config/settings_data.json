@@ -3,7 +3,8 @@
     "name": "Development Company"
   },
   "main_colors": {
-    "nav_color": "#65ade0"
+    "nav_color": "",
+    "subnav_color": ""
   },
   "database": {
     "name": "app_db",
