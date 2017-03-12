@@ -1,36 +1,46 @@
 [{
-  "name": "company",
-  "settings": [{
-    "type": "header",
-    "content": "These are settings specific to your company"
-  }, {
-    "type": "paragraph",
-    "content": "These will affect information displayed in the app, invoices, etc."
-  }, {
-    "type": "text",
-    "id": "name",
-    "label": "Name of your company",
-    "info": "Enter the name of your company"
-  }]
-}, {
-  "name": "main_colors",
-  "settings": [{
-    "type": "header",
-    "content": "This will change the colors for parts of the app"
-  }, {
-    "type": "color",
-    "id": "nav_color",
-    "label": "Nav Bar Color"
-  }]
-}, {
-  "name": "database",
-  "settings": [{
-    "type": "header",
-    "content": "These are important settings specific to your app"
-  }, {
+  "name": "company",
+  "settings": [{
+    "type": "header",
+    "content": "These are settings specific to your company"
+  }, {
+    "type": "paragraph",
+    "content": "These will affect information displayed in the app, invoices, etc."
+  }, {
     "type": "text",
-    "id": "database_password",
-    "label": "Password for App Database",
+    "id": "name",
+    "label": "Name of your company",
+    "info": "Enter the name of your company"
+  }]
+}, {
+  "name": "main_colors",
+  "settings": [{
+    "type": "header",
+    "content": "This will change the colors for parts of the app"
+  }, {
+    "type": "color",
+    "id": "nav_color",
+    "label": "Nav Bar Color"
+  }]
+}, {
+  "name": "database",
+  "settings": [{
+    "type": "header",
+    "content": "These are important settings specific to your app"
+  }, {
+    "type": "text",
+    "id": "password",
+    "label": "Name of Database File",
+    "default": "app_db"
+  }, {
+    "type": "text",
+    "id": "username",
+    "label": "Username for Database",
+    "default": "app"
+  }, {
+    "type": "password",
+    "id": "password",
+    "label": "Password for Database",
     "default": "pleasechangeme"
   }]
 }]

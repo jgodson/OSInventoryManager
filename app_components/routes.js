@@ -1,4 +1,4 @@
-const config = require('./app_config');
+const config = require(path.join(__dirname, 'app_config'));
 const render = require(path.join(__dirname, `render`));
 
 const routes = {

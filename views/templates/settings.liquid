@@ -1,3 +1,9 @@
 {% include 'header' %}
 
-<p> This is the body </p>
+{% include 'settings-subheader' %}
+
+<div class="settings__list">
+  {% for setting in options.schema %}
+    {% include 'setting', setting: setting, current: settings[setting.name] %}
+  {% endfor %}
+</div>

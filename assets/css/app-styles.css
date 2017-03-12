@@ -25,3 +25,7 @@ form.navbar-form.navbar-right .btn-default:hover {
 .navbar-nav li .glyphicon {
   margin-right: 10px;
 }
+
+#subheader {
+  margin-top: -20px;
+}

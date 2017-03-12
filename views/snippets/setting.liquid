@@ -1,0 +1,23 @@
+<div class="setting">
+  <h3>{{ setting.name | replace: "_", " " | capitalize }}</h3>
+  {% for this in setting.settings %}
+    {% case this.type %}
+      {% when 'header' %}
+        <h4>{{ this.content }}</h4>
+      {% when 'paragraph' %}
+        <p>{{ this.content }}</p>
+      {% when 'text' %}
+        <label for="{{ this.id }}">{{ this.label }}</label>
+        <input name="{{ this.id }}" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+      {% when 'color' %}
+        <label for="{{ this.id }}">{{ this.label }}</label>
+        <input name="{{ this.id }}" type="color" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+      {% when 'password' %}
+        <label for="{{ this.id }}">{{ this.label }}</label>
+        <input name="{{ this.id }}" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+      {% when 'number' %}
+        <label for="{{ this.id }}">{{ this.label }}</label>
+        <input name="{{ this.id }}" type="number" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+    {% endcase %}
+  {% endfor %}
+</div>
