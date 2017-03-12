@@ -1,6 +1,7 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
 const handlers = require(`../${config.paths.components_folder}/app_event_handlers`);
+const remote = require('electron').remote;
 const appRoot = document.querySelector('#app-root');
 const EventEmitter = require('events').EventEmitter;
 const visualizer = new EventEmitter();
@@ -30,6 +31,9 @@ fileWriter.on('complete', fileName => {
   } else {
     console.error(`fileWriter received 'complete' event on file that never sent 'startCheck' event`);
   }
+
+  // Have to reload window for file changes to take effect
+  remote.getCurrentWindow().reload();
 });
 
 $(document).on('click', 'a[href]:not(a[href="#"])', function(evt) {

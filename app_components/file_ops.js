@@ -27,8 +27,7 @@ function writeSettings(data) {
 }
 
 function handleStartWrite(info) {
-  console.log(path.resolve(`${FILEMAP[info.fileName]}/${info.fileName}`));
-  fs.writeFile(`${FILEMAP[info.fileName]}/${info.fileName}`, JSON.stringify(info.data), err => {
+  fs.writeFile(path.resolve(`${FILEMAP[info.fileName]}/${info.fileName}`), JSON.stringify(info.data), err => {
     if (err) {
       console.error(err);
       return;

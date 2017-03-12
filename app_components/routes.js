@@ -42,10 +42,13 @@ function handleNoRoute(action) {
 }
 
 function handleNavRoute(templateName) {
-  if (history[history.length] !== templateName) {
+  // Don't re-render the same template
+  if (history[history.length - 1] !== templateName) {
     addToHistory(templateName);
     render(templateName)
-        .then(html => visualizer.emit('rendercomplete', html));
+      .then(html => visualizer.emit('rendercomplete', html));
+  } else {
+    console.warn(`[Info] Navigation to ${templateName} aborted`);
   }
 }
 

@@ -1,6 +1,11 @@
 /* For app specific CSS that doesn't need to change based on settings */
-#app-root > div {
+#app-root > div,
+#app-root > form > div {
   padding: 0 20px;
+}
+
+#app-root > form {
+  padding-top: 20px;
 }
 
 #app-main-nav {
@@ -20,6 +25,8 @@ form.navbar-form.navbar-right .btn-default {
   color: inherit;
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: 12px;
+  margin-bottom: 0;
 }
 
 form.navbar-form.navbar-right .btn-default:hover {
