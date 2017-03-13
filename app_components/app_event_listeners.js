@@ -7,29 +7,65 @@ const EventEmitter = require('events').EventEmitter;
 const visualizer = new EventEmitter();
 const fileWriter = require(`../${config.paths.components_folder}/fileWriter`);
 
-let currentFileWrites= [];
+// TODO: put the console overwrites in it's own file
+// Also I can prepend the current time to the log here
+
+let stuff = [];
+
+// Overwrite console.log, error, infom and warn to log to file as well
+let realConsole = {
+  log: console.log,
+  error: console.error,
+  info: console.info,
+  warn: console.warn
+};
+
+console.info = function() {
+  stuff.push(arguments[0]);
+  return realConsole.info.apply(console, arguments);
+}
+
+console.error = function() {
+  stuff.push(arguments[0]);
+  return realConsole.error.apply(console, arguments);
+}
+
+console.log = function() {
+  stuff.push(arguments[0]);
+  return realConsole.log.apply(console, arguments);
+}
+
+console.warn = function() {
+  stuff.push(arguments[0]);
+  return realConsole.warn.apply(console, arguments);
+}
+
+
+let currentFileWrites = [];
 
 // Shows rendered html on the page
 visualizer.on('rendercomplete', html => {
   appRoot.innerHTML = html;
 });
 
-fileWriter.on('startCheck', info => {
+fileWriter.on('startCheck', fileInfo => {
   // Do not write file if file is in use
-  if (!currentFileWrites.includes(info.fileName)) {
-    currentFileWrites.push(info.fileName);
-    fileWriter.emit('startOk', info);
+  if (!currentFileWrites.includes(fileInfo.fileName)) {
+    currentFileWrites.push(fileInfo.fileName);
+    console.info(`[File Write] Ok to write ${fileInfo.fileName}`);
+    fileWriter.emit('startOk', fileInfo);
   } else {
-    fileWriter.emit('startWait', info);
+    console.warn(`[File Write] File ${fileInfo.fileName} is in use.`);
+    fileWriter.emit('startWait', fileInfo);
   }
 });
 
 fileWriter.on('complete', fileName => {
   if (currentFileWrites.includes(fileName)) {
-      console.log(`${fileName} written successfully`);
+      console.info(`[File Write] ${fileName} written successfully!`);
       currentFileWrites.splice(currentFileWrites.indexOf(fileName), 1);
   } else {
-    console.error(`fileWriter received 'complete' event on file that never sent 'startCheck' event`);
+    console.warn(`[File Write] fileWriter received 'complete' event on file that wasn't added to 'currentFileWrites'`);
   }
 
   // Have to reload window for file changes to take effect
@@ -48,6 +84,7 @@ $(document).on('click', '[type="submit"]', function(evt) {
   let data = formToJSON($form.serializeArray());
   handlers.form(action, data);
 
+  // Converts form data in an array to JSON
   function formToJSON(data) {
     let formObj = {};
     data.forEach((formInput) => {
@@ -62,5 +99,14 @@ $(document).on('click', '[type="submit"]', function(evt) {
       }
     });
     return formObj;
+  }
+});
+
+// Change checkbox data
+$(document).on('change', 'input[type="checkbox"]', function() {
+  if (this.value === "true") {
+    this.value = "false";
+  } else {
+    this.value = "true";
   }
 });

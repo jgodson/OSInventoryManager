@@ -24,24 +24,19 @@
     "default": "#009688"
   }]
 }, {
-  "name": "database",
+  "name": "users",
   "settings": [{
     "type": "header",
-    "content": "These are important settings specific to your app"
+    "content": "These settings customize how user accounts work"
+  }, {
+    "type": "checkbox",
+    "id": "required",
+    "label": "Require Users to log In to use the app"
   }, {
     "type": "text",
-    "id": "name",
-    "label": "Name of Database File",
-    "default": "app_db"
-  }, {
-    "type": "text",
-    "id": "username",
-    "label": "Username for Database",
-    "default": "app"
-  }, {
-    "type": "password",
-    "id": "password",
-    "label": "Password for Database",
-    "default": "pleasechangeme"
+    "id": "default_user",
+    "label": "Default User",
+    "info": "Name to show when user's aren't required",
+    "default": "App User"
   }]
 }]

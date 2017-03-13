@@ -4,25 +4,52 @@ const DB = require(`../${config.paths.data_folder}/db_actions`);
 const User = require(`../${config.paths.models_folder}/user`);
 const routes = require(`../${config.paths.components_folder}/routes`);
 
-function handleNavigation(evt) {
+// Track logged in User
+let currentUser = undefined;
+
+function handleNavigation(evt, token) {
+  const startTime = Date.now();
   let action = $(evt.target).attr('href') || $(evt.target).parent().attr('href');
   action = replaceSlash(action);
-  try {
     console.info(`[Route Called] ${action}`);
-    routes[action]();
-  } catch (err) {
-    routes.noRoute(action);
-  }
+    if (typeof routes[action] === 'function') {
+      routes[action]()
+        .then(() => {
+          const endTime = Date.now();
+          console.info(`[Route Success] ${action} took ${endTime - startTime}ms`);
+        })
+        .catch(err => {
+          console.warn(err);
+        });
+    } else {
+      routes.noRoute(action);
+    }
 }
 
 function handleFormSubmit(formAction, formData) {
   formAction = replaceSlash(formAction);
-  try {
     console.info(`[Form Submit] ${formAction}`);
-    routes.forms[formAction](formData)
-  } catch (err) {
+  if (typeof routes.forms[formAction] === 'function') {
+    routes.forms[formAction](formData);
+  } else {
     routes.noRoute(formAction);
   }
+}
+
+function handleLogIn() {
+  // TODO: Add to currentUser variable
+}
+
+// Log out user and return to dashboard
+function handleLogOut() {
+  currentUser == undefined;
+  routes['index']()
+    .then(() => {
+      console.info(`[Log Out Success] Succesfully Logged Out`);
+    })
+    .catch(err => {
+      console.warn(err);
+    });
 }
 
 function replaceSlash(action) {

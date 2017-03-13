@@ -8,22 +8,22 @@ let history = [];
 // Regular Links
 const routes = {
   index() {
-    handleNavRoute('index');
+    return handleNavRoute('index');
   },
   parts() {
-    handleNavRoute('parts');
+    return handleNavRoute('parts');
   },
   settings() {
-    handleNavRoute('settings');
+    return handleNavRoute('settings');
   },
   customers() {
-    handleNavRoute('customers');
+    return handleNavRoute('customers');
   },
   goBack() {
-    handleGoBack();
+    return handleGoBackRoute();
   },
   cancel() {
-    handleGoBack();
+    return handleGoBackRoute();
   },
   noRoute(action) {
     handleNoRoute(action);
@@ -33,7 +33,7 @@ const routes = {
 // Form Submissions
 routes.forms = {
   settings_save(formData) {
-    handleSettingsSave(formData);
+    handleSettingsSaveRoute(formData);
   }
 }
 
@@ -41,23 +41,36 @@ function handleNoRoute(action) {
   console.warn(`[Missing Route] ${action}`);
 }
 
+function handleNoPermissions(action, user) {
+  console.warn(`[Access Denied] User ${user} does not have permission to go do ${action}`);
+}
+
 function handleNavRoute(templateName) {
   // Don't re-render the same template
   if (history[history.length - 1] !== templateName) {
-    addToHistory(templateName);
-    render(templateName)
-      .then(html => visualizer.emit('rendercomplete', html));
+    return render(templateName)
+      .then(html => {
+        visualizer.emit('rendercomplete', html);
+        addToHistory(templateName);
+      })
+      .catch(error => {
+        console.warn(`[Render Error] ${error}`);
+      });
   } else {
-    console.warn(`[Info] Navigation to ${templateName} aborted`);
+    return new Promise((resolve, reject) => {
+      reject(`[Info] Already on ${templateName}`);
+    });
   }
 }
 
-function handleSettingsSave(formData) {
-  file.writeSettings(formData);
+function handleSettingsSaveRoute(formData) {
+  // Name of settings data file
+  const fileName = 'settings_data.json';
+  file.writeData(fileName, formData);
 }
 
-function handleGoBack() {
-  handleNavRoute(history[length - 1] || history[0]);
+function handleGoBackRoute() {
+  return handleNavRoute(history[length - 1] || history[0]);
 }
 
 function addToHistory(templateName) {

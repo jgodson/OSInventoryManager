@@ -1,6 +1,10 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
 
+const queryOpts = {
+  force: process.env['NODE_ENV'] === 'production' ? false : true
+}
+
 // Database
 const DB = require('./db');
 
@@ -56,5 +60,5 @@ function findUser(params) {
 }
 
 module.exports = {
-  createUser: createUser
+  createUser
 }

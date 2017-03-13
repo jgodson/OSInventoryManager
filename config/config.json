@@ -16,6 +16,6 @@
   "database": {
     "host": "localhost",
     "dialect": "sqlite",
-    "file_ext": "sqlite"
+    "name": "app_db.sqlite"
   }
 }

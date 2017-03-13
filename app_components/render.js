@@ -2,7 +2,7 @@ const path = require('path');
 const config = require(path.join(__dirname, 'app_config'));
 
 // Global app settings will be available in any template rendered
-const settings = require(`../${config.paths.config_folder}/settings_data.json`);
+const settings = require(`../${config.paths.app_data}/settings_data.json`);
 
 // Add the app config settings to the global settings object
 settings.config = config;
@@ -24,12 +24,9 @@ const engine = Liquid({
 function render(fileName, options = {}) {
   // Return a promise with a catch all error handler
   if (fileName === 'settings') {
-    options.schema = require(`../${config.paths.config_folder}/settings_schema.json`)
+    options.schema = require(`../${config.paths.config_folder}/settings_schema.json`);
   }
-  return engine.renderFile(fileName, { settings: settings, options: options, template: fileName })
-    .catch(error => {
-      console.error(error);
-    });
+  return engine.renderFile(fileName, { settings: settings, options: options, template: fileName });
 }
 
 module.exports = render;
