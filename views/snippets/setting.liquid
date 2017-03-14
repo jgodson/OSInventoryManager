@@ -3,33 +3,42 @@
   {% for this in setting.settings %}
     {% case this.type %}
       {% when 'header' %}
-        <h4>{{ this.content }}</h4>
+        <h4 class="text-muted">{{ this.content }}</h4>
       {% when 'paragraph' %}
-        <p>{{ this.content }}</p>
+        <p class="text-muted">{{ this.content }}</p>
       {% when 'text' %}
-        <div class="settings__field">
-          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
-          <input name="{{setting.name}}-{{ this.id }}" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="form-group label-floating col-xs-12 col-sm-6">
+          <label for="{{setting.name}}-{{ this.id }}" class="control-label">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" class="form-control" type="text" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+          {% if this.info %}<span class="help-block">{{ this.info }}</span>{% endif %}
         </div>
       {% when 'color' %}
-        <div class="settings__field">
-          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
-          <input name="{{setting.name}}-{{ this.id }}" type="color" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="form-group label-floating col-xs-12 col-sm-6">
+          <label for="{{setting.name}}-{{ this.id }}" class="control-label">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" class="form-control" type="color" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+          {% if this.info %}<span class="help-block">{{ this.info }}</span>{% endif %}
         </div>
       {% when 'password' %}
-        <div class="settings__field">
-          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
-          <input name="{{setting.name}}-{{ this.id }}" type="password" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="form-group label-floating col-xs-12 col-sm-6">
+          <label for="{{setting.name}}-{{ this.id }}" class="control-label">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" class="form-control" type="password" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+          {% if this.info %}<span class="help-block">{{ this.info }}</span>{% endif %}
         </div>
       {% when 'number' %}
-        <div class="settings__field">
-          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
-          <input name="{{setting.name}}-{{ this.id }}" type="number" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+        <div class="form-group label-floating col-xs-12 col-sm-6">
+          <label for="{{setting.name}}-{{ this.id }}" class="control-label">{{ this.label }}</label>
+          <input name="{{setting.name}}-{{ this.id }}" class="form-control" type="number" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
+          {% if this.info %}<span class="help-block">{{ this.info }}</span>{% endif %}
         </div>
       {% when 'checkbox' %}
-        <div class="settings__field">
-          <label for="{{setting.name}}-{{ this.id }}">{{ this.label }}</label>
-          <input name="{{setting.name}}-{{ this.id }}" type="checkbox" {%- if current[this.id] -%}value="{{ current[this.id] }}" {% if current[this.id] == 'true' %} checked {% endif %}{%- elsif this.default -%}value="{{ this.default }}" {% if current[this.id] == 'true' %} checked {% endif %}{%- endif -%}/>
+        <div class="form-group">
+          <div class="checkbox">
+            <label for="{{setting.name}}-{{ this.id }}">
+              <input name="{{setting.name}}-{{ this.id }}" type="checkbox" {%- if current[this.id] -%}value="{{ current[this.id] }}" {% if current[this.id] == 'true' %} checked {% endif %}{%- elsif this.default -%}value="{{ this.default }}" {% if current[this.id] == 'true' %} checked {% endif %}{%- endif -%}/>
+              {{ this.label }}
+            </label>
+            {% if this.info %}<p class="help-block">{{ this.info }}</p>{% endif %}
+          </div>
         </div>
     {% endcase %}
   {% endfor %}

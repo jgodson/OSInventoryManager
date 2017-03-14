@@ -10,7 +10,7 @@ const fileWriter = require(`../${config.paths.components_folder}/fileWriter`);
 // TODO: put the console overwrites in it's own file
 // Also I can prepend the current time to the log here
 
-let stuff = [];
+let logs = [];
 
 // Overwrite console.log, error, infom and warn to log to file as well
 let realConsole = {
@@ -21,34 +21,54 @@ let realConsole = {
 };
 
 console.info = function() {
-  stuff.push(arguments[0]);
+  logs.push(arguments[0]);
   return realConsole.info.apply(console, arguments);
 }
 
 console.error = function() {
-  stuff.push(arguments[0]);
+  logs.push(arguments[0]);
   return realConsole.error.apply(console, arguments);
 }
 
 console.log = function() {
-  stuff.push(arguments[0]);
+  logs.push(arguments[0]);
   return realConsole.log.apply(console, arguments);
 }
 
 console.warn = function() {
-  stuff.push(arguments[0]);
+  logs.push(arguments[0]);
   return realConsole.warn.apply(console, arguments);
 }
 
-
+// Keep track of files currently being written
 let currentFileWrites = [];
 
+// Keep track of the delay after page loads to allow for animations
+let delay = undefined;
+
 // Shows rendered html on the page
-visualizer.on('rendercomplete', html => {
+visualizer.on('rendercomplete', (html)=> {
   appRoot.innerHTML = html;
+  // Init Material Design Elements
+  $.material.init();
+  // Adding a class after a short delay allows animations since we replace HTML
+  appRoot.classList.add('delay');
+  if (delay) {
+    // Reset delay timer
+    clearTimeout(delay);
+    delay = setTimeout( ()=> {
+      appRoot.classList.add('delay-done');
+      delay = undefined;
+    }, 100);
+  } else {
+    delay = setTimeout( ()=> {
+      appRoot.classList.add('delay-done');
+      delay = undefined;
+    }, 100);
+  }
 });
 
-fileWriter.on('startCheck', fileInfo => {
+fileWriter.on('startCheck', (fileInfo)=> {
   // Do not write file if file is in use
   if (!currentFileWrites.includes(fileInfo.fileName)) {
     currentFileWrites.push(fileInfo.fileName);
@@ -60,7 +80,7 @@ fileWriter.on('startCheck', fileInfo => {
   }
 });
 
-fileWriter.on('complete', fileName => {
+fileWriter.on('complete', (fileName)=> {
   if (currentFileWrites.includes(fileName)) {
       console.info(`[File Write] ${fileName} written successfully!`);
       currentFileWrites.splice(currentFileWrites.indexOf(fileName), 1);
@@ -73,12 +93,15 @@ fileWriter.on('complete', fileName => {
 });
 
 $(document).on('click', 'a[href]:not(a[href="#"])', function(evt) {
+  appRoot.classList.remove('delay', 'delay-done');
   evt.preventDefault();
   handlers.navigation(evt);
 });
 
-$(document).on('click', '[type="submit"]', function(evt) {
+// Handle form submissions
+$(document).on('submit', 'form', function(evt) {
   evt.preventDefault();
+  appRoot.classList.remove('delay', 'delay-done');
   let $form = $(this).closest('form');
   let action = $form.attr('action');
   let data = formToJSON($form.serializeArray());
@@ -87,7 +110,7 @@ $(document).on('click', '[type="submit"]', function(evt) {
   // Converts form data in an array to JSON
   function formToJSON(data) {
     let formObj = {};
-    data.forEach((formInput) => {
+    data.forEach((formInput)=> {
       formInput.name = formInput.name.split('-');
       let namespace = formInput.name[0];
       let name = formInput.name[1];
@@ -102,11 +125,19 @@ $(document).on('click', '[type="submit"]', function(evt) {
   }
 });
 
-// Change checkbox data
-$(document).on('change', 'input[type="checkbox"]', function() {
-  if (this.value === "true") {
-    this.value = "false";
+// Allow non standard elements to submit forms
+$(document).on('click', '[type="submit"]:not(input, button)', function() {
+  $(this).closest('form').trigger('submit');
+});
+
+// Toggle Checkboxes and set value attribute
+$(document).on('click', '.checkbox', function() {
+  let checkbox = this.querySelector('input');
+  if (checkbox.value === "true") {
+    checkbox.value = "false";
+    checkbox.checked = false;
   } else {
-    this.value = "true";
+    checkbox.value = "true";
+    checkbox.checked = true;
   }
 });

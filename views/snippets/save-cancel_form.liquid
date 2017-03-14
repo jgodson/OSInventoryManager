@@ -1,11 +1,11 @@
 {% case section %}
   {% when 'start' %}
-    <form enctype='application/json' action="{{template}}/save">
+    <form action="{{template}}/save">
       <nav id="subheader">
           <div class="action__buttons float-right">
             <ul class="nav navbar-nav">
-              <li><a type="submit" ><span class="glyphicon glyphicon-floppy-saved"></span>Save<span class="sr-only">save</span></a></li>
-              <li><a href="cancel"><span class="glyphicon glyphicon-remove"></span>Cancel<span class="sr-only">cancel</span></a></li>
+              <li><a class="btn" type="submit" ><span class="glyphicon glyphicon-floppy-saved"></span>Save<span class="sr-only">save</span></a></li>
+              <li><a class="btn" href="cancel"><span class="glyphicon glyphicon-remove"></span>Cancel<span class="sr-only">cancel</span></a></li>
             </ul>
           </div>
       </nav>

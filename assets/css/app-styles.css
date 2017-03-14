@@ -12,20 +12,14 @@
   margin-bottom: 0px;
 }
 
-.navbar .navbar-brand {
-  height: 50px;
-}
-
 form.navbar-form.navbar-right {
-  margin-top: 0;
   margin-bottom: 0;
 }
 
 form.navbar-form.navbar-right .btn-default {
-  color: inherit;
+  color: inherit !important;
   padding-left: 0;
   padding-right: 0;
-  padding-bottom: 12px;
   margin-bottom: 0;
 }
 
@@ -55,6 +49,12 @@ form.navbar-form.navbar-right .btn-default:hover {
 
 .action__buttons {
   border-bottom-left-radius: 4px;
+  transform: translateX(100%);
+  transition: all 300ms ease-out;
+}
+
+.delay-done .action__buttons {
+  transform: translateX(0);
 }
 
 .action__buttons li a:focus {
@@ -63,6 +63,26 @@ form.navbar-form.navbar-right .btn-default:hover {
 
 .float-right {
   float: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Show help on hover over inputs */
+.form-group:hover > .help-block {
+  display: block;
+}
+
+.well {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#notification-list {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
 }
 
 @media screen and (max-width: 767px) {

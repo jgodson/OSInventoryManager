@@ -5,7 +5,7 @@
     "content": "These are settings specific to your company"
   }, {
     "type": "paragraph",
-    "content": "These will affect information displayed in the app, invoices, etc."
+    "content": "Note: will affect information displayed in the app, invoices, etc."
   }, {
     "type": "text",
     "id": "name",
@@ -13,15 +13,20 @@
     "info": "Enter the name of your company"
   }]
 }, {
-  "name": "main_colors",
+  "name": "colors",
   "settings": [{
     "type": "header",
     "content": "This will change the colors for parts of the app"
   }, {
     "type": "color",
-    "id": "nav_color",
-    "label": "Nav Bar Color",
+    "id": "main_color",
+    "label": "Main Color",
     "default": "#009688"
+  }, {
+    "type": "color",
+    "id": "accent_color",
+    "label": "Accent Color",
+    "default": "#00BCD4"
   }]
 }, {
   "name": "users",
@@ -31,7 +36,8 @@
   }, {
     "type": "checkbox",
     "id": "required",
-    "label": "Require Users to log In to use the app"
+    "label": "Require Log In",
+    "info": "Require Users to log In to use the app"
   }, {
     "type": "text",
     "id": "default_user",

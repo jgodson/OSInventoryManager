@@ -2,9 +2,11 @@
 
 {% include 'save-cancel_form', section: "start" %}
 
-<div class="settings__list">
+<div class="col-xs-12 col-sm-8 col-sm-offset-2">
   {% for setting in options.schema %}
-    {% include 'setting', setting: setting, current: settings[setting.name] %}
+    <div class="well row">
+      {% include 'setting', setting: setting, current: settings[setting.name] %}
+    </div>
   {% endfor %}
 </div>
 

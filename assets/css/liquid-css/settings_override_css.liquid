@@ -1,11 +1,39 @@
 {% comment %} This file will use CSS along with liqiud to insert custom settings to style the app {% endcomment %}
+
+{% comment %} Assign liquid variables to use here {% endcomment %}
+{% assign main_color = settings.colors.main_color | default: "#009688" %}
+{% assign accent_color = settings.colors.accent_color | default: "#00BCD4" %}
+
 <style>
+  {% comment %} <------ Custom Styles ------> {% endcomment %}
   #app-main-nav {
-    background-color: {{ settings.main_colors.nav_color  | default: "#009688" }};
+    background-color: {{ main_color }};
   }
 
   .action__buttons {
-    background-color: {{ settings.main_colors.nav_color | default: "#009688" }} !important;
+    background-color: {{ main_color }} !important;
   }
+  {% comment %} <------ End Custom Styles ------> {% endcomment %}
+
+  {% comment %} <------ Override Bootstrap Styles with settings ------> {% endcomment %}
+  .checkbox input[type=checkbox]:checked+.checkbox-material .check,
+  label.checkbox-inline input[type=checkbox]:checked+.checkbox-material .check {
+    color: {{ accent_color }};
+    border-color: {{ accent_color }};
+  }
+
+  .checkbox input[type=checkbox]:checked+.checkbox-material .check:before,
+  label.checkbox-inline input[type=checkbox]:checked+.checkbox-material .check:before {
+    color: {{ accent_color }};
+  }
+
+  .form-group.is-focused .form-control {
+    background-image: linear-gradient({{ accent_color }}, {{ accent_color }}),linear-gradient(#D2D2D2,#D2D2D2);
+  }
+
+  .form-group.is-focused label, .form-group.is-focused label.control-label {
+    color: {{ accent_color }};
+  }
+  {% comment %} <------ End Bootstrap Overrides ------> {% endcomment %}
 
 </style>

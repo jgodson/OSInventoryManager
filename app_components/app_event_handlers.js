@@ -7,7 +7,7 @@ const routes = require(`../${config.paths.components_folder}/routes`);
 // Track logged in User
 let currentUser = undefined;
 
-function handleNavigation(evt, token) {
+function handleNavigation(evt) {
   const startTime = Date.now();
   let action = $(evt.target).attr('href') || $(evt.target).parent().attr('href');
   action = replaceSlash(action);
