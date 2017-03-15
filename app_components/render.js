@@ -1,11 +1,14 @@
 const path = require('path');
 const config = require(path.join(__dirname, 'app_config'));
+const utils = require(path.join(__dirname, 'utils'));
+const jQuery = require('jQuery');
 
 // Global app settings will be available in any template rendered
+// If settings aren't present, defaults are used
 const settings = require(`../${config.paths.app_data}/settings_data.json`);
-
-// Add the app config settings to the global settings object
-settings.config = config;
+const defaultSettings = utils.getDefaultSettings();
+const mergedSettings = {};
+jQuery.extend(true, mergedSettings, defaultSettings, settings);
 
 // Set up folders for liquid files
 const folders = {
@@ -26,7 +29,7 @@ function render(fileName, options = {}) {
   if (fileName === 'settings') {
     options.schema = require(`../${config.paths.config_folder}/settings_schema.json`);
   }
-  return engine.renderFile(fileName, { settings: settings, options: options, template: fileName });
+  return engine.renderFile(fileName, { settings: mergedSettings, options: options, template: fileName });
 }
 
 module.exports = render;

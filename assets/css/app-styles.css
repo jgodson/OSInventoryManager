@@ -1,15 +1,12 @@
 /* For app specific CSS that doesn't need to change based on settings */
-#app-root > div,
-#app-root > form > div {
-  padding: 0 20px;
+
+#subheader {
+  margin-bottom: -20px;
 }
 
-#app-root > form {
-  padding-top: 20px;
-}
-
-#app-main-nav {
-  margin-bottom: 0px;
+#app-root > div:first-of-type,
+#app-root > form > div:first-of-type {
+  margin-top: 20px;
 }
 
 form.navbar-form.navbar-right {
@@ -35,10 +32,6 @@ form.navbar-form.navbar-right .btn-default:hover {
   color: black !important;
 }
 
-#subheader {
-  margin-top: -20px;
-}
-
 #subheader a {
   color: white;
 }
@@ -49,6 +42,9 @@ form.navbar-form.navbar-right .btn-default:hover {
 
 .action__buttons {
   border-bottom-left-radius: 4px;
+  position: absolute;
+  right: 0;
+  z-index: 1;
   transform: translateX(100%);
   transition: all 300ms ease-out;
 }
@@ -81,12 +77,45 @@ form.navbar-form.navbar-right .btn-default:hover {
 #notification-list {
   position: fixed;
   top: 0;
-  right: 0;
+  right: 10px;
   width: 400px;
+  margin-top: 60px;
+  z-index: 10;
 }
 
+
+#notification-list .notification {
+  transform: translateX(100%);
+  padding: 20px;
+  min-height: 144px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  transition: all 300ms ease-in-out;
+}
+
+/* Slide notifications in */
+#notification-list .notification.shown {
+  transform: translateX(0);
+}
+
+#notification-list .notification .material-icons {
+  font-size: 30px;
+}
+
+.list-group .list-group-item .row-content .least-content a {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+/* <------ Smaller Window Sizes ------> */
 @media screen and (max-width: 767px) {
   .action__buttons {
     padding: 0 20px;
+  }
+
+  #notification-list {
+    margin-top: 50px;
   }
 }

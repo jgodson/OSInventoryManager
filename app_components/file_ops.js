@@ -1,23 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 const config = require(path.join(__dirname, 'app_config'));
-const fileWriter = require(path.join(__dirname, 'fileWriter'));
+const FileWriter = require(path.join(__dirname, 'FileWriter'));
 
-const FILEMAP = {
+const PATHMAP = {
   'settings_data.json': `./${config.paths.app_data}`
 }
 
-fileWriter.on('startOk', fileInfo => {
+FileWriter.on('startOk', fileInfo => {
   handleStartWrite(fileInfo);
 });
 
-fileWriter.on('startWait', fileInfo => {
+FileWriter.on('startWait', fileInfo => {
   // TODO, try again after a certain amount of time?
   console.log("startWait");
 });
 
 function writeData(fileName, data) {
-  fileWriter.emit('startCheck', {
+  FileWriter.emit('startCheck', {
     fileName: fileName,
     data: data
   });
@@ -39,12 +39,12 @@ function handleStartWrite(fileInfo) {
   }
 
   // Write the file
-  fs.writeFile(path.resolve(`${FILEMAP[fileInfo.fileName]}/${fileInfo.fileName}`), fileData, err => {
+  fs.writeFile(path.resolve(`${PATHMAP[fileInfo.fileName]}/${fileInfo.fileName}`), fileData, err => {
     if (err) {
       console.error(err);
       return;
     }
-    fileWriter.emit('complete', fileInfo.fileName);
+    FileWriter.emit('complete', fileInfo.fileName);
   });
 }
 

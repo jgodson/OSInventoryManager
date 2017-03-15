@@ -37,12 +37,31 @@
     "type": "checkbox",
     "id": "required",
     "label": "Require Log In",
-    "info": "Require Users to log In to use the app"
+    "info": "Require Users to log In to use the app",
+    "default": "false"
   }, {
     "type": "text",
     "id": "default_user",
     "label": "Default User",
     "info": "Name to show when user's aren't required",
     "default": "App User"
+  }]
+}, {
+  "name": "notifications",
+  "settings": [{
+    "type": "header",
+    "content": "These settings customize how notifications are shown"
+  }, {
+    "type": "checkbox",
+    "id": "allow_hide",
+    "label": "Notifications Timeout",
+    "info": "Allow notifications to hide automatically. Uncheck to always manually dismiss",
+    "default": "true"
+  }, {
+    "type": "number",
+    "id": "timeout",
+    "label": "Default Timeout",
+    "info": "How long to show notifications for before they hide themselves. (# of seconds x 1000)",
+    "default": "6000"
   }]
 }]

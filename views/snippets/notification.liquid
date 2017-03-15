@@ -1,0 +1,35 @@
+{%- assign default = settings.default -%}
+
+{% comment %} Find if notifications are hidden {% endcomment %}
+  {%- assign allow_hide = options.allow_hide == false and settings.notifications.allow_hide == false and default.notifications.allow_hide == false -%}
+  {%- if options.allow_hide == false -%}
+    {% assign allow_hide = false %}
+  {%- elsif settings.notifications.allow_hide == false and options.allow_hide != true -%}
+    {% assign allow_hide = false %}
+  {%- elsif default.notiications.allow_hide == false and settings.notifications.allow_hide != true -%}
+    {% assign allow_hide = false %}
+  {%- else -%}
+    {% assign allow_hide = true %}
+  {%- endif -%}
+{% comment %} Finished find if notifications are hidden {% endcomment %}
+
+{%- assign timeout = options.timeout or settings.notifications.timeout | default: 6000 -%}
+
+<div class="notification list-group-item" data-id="{{ options.id }}" 
+  {%- if allow_hide -%}
+    data-timeout="{{ timeout }}"
+  {%- endif -%}
+>
+  <div class="row-action-primary">
+    <i class="material-icons">{{ options.icon_name | default: "info" }}</i>
+  </div>
+  <div class="row-content">
+    <div class="least-content"><a href="#" class='notification-close'>x</a></div>
+    <h4 class="list-group-item-heading">{{ options.title | default: "Notification Title" }}</h4>
+
+    <p class="list-group-item-text">{{ options.message | default: "Notification message" }}</p>
+
+    <p>{{ timeout }}</p>
+
+  </div>
+</div>

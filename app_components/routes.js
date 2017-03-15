@@ -50,7 +50,7 @@ function handleNavRoute(templateName) {
   if (history[history.length - 1] !== templateName) {
     return render(templateName)
       .then(html => {
-        visualizer.emit('rendercomplete', html);
+        Visualizer.emit('rendercomplete', html);
         addToHistory(templateName);
       })
       .catch(error => {

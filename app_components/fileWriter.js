@@ -1,4 +1,4 @@
 const EventEmitter = require('events').EventEmitter;
-const fileWriter = new EventEmitter();
+const FileWriter = new EventEmitter();
 
-module.exports = fileWriter;
+module.exports = FileWriter;

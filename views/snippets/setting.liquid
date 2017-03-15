@@ -34,7 +34,21 @@
         <div class="form-group">
           <div class="checkbox">
             <label for="{{setting.name}}-{{ this.id }}">
-              <input name="{{setting.name}}-{{ this.id }}" type="checkbox" {%- if current[this.id] -%}value="{{ current[this.id] }}" {% if current[this.id] == 'true' %} checked {% endif %}{%- elsif this.default -%}value="{{ this.default }}" {% if current[this.id] == 'true' %} checked {% endif %}{%- endif -%}/>
+              <input name="{{setting.name}}-{{ this.id }}" type="checkbox" 
+                {%- if current[this.id] -%}
+                  value="{{ current[this.id] }}"
+                  {%- if current[this.id] == true -%}
+                    checked
+                  {%- endif -%}
+                {%- elsif this.default -%}
+                  value="{{ this.default }}"
+                  {%- if this.default == true -%}
+                    checked 
+                  {%- endif -%}
+                {%- else -%}
+                  value="false"
+                {%- endif -%}
+              />
               {{ this.label }}
             </label>
             {% if this.info %}<p class="help-block">{{ this.info }}</p>{% endif %}
