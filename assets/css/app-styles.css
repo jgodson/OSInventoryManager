@@ -1,11 +1,6 @@
 /* For app specific CSS that doesn't need to change based on settings */
 
-#subheader {
-  margin-bottom: -20px;
-}
-
-#app-root > div:first-of-type,
-#app-root > form > div:first-of-type {
+.settings__list {
   margin-top: 20px;
 }
 
@@ -30,6 +25,10 @@ form.navbar-form.navbar-right .btn-default:hover {
 
 .navbar-nav li a:hover {
   color: black !important;
+}
+
+#subheader {
+  margin-top: -20px;
 }
 
 #subheader a {
@@ -85,7 +84,9 @@ form.navbar-form.navbar-right .btn-default:hover {
 
 
 #notification-list .notification {
-  transform: translateX(100%);
+  transform: translateX(110%);
+  display: table;
+  width: 400px;
   padding: 20px;
   min-height: 144px;
   background-color: rgba(255, 255, 255, 0.9);
@@ -97,6 +98,18 @@ form.navbar-form.navbar-right .btn-default:hover {
 /* Slide notifications in */
 #notification-list .notification.shown {
   transform: translateX(0);
+}
+
+#notification-list .notification .icon__left {
+  display: table-cell;
+  width: 20%;
+  vertical-align: middle;
+  padding-right: 0;
+}
+
+#notification-list .notification .row-content {
+  display: table-cell;
+  width: 80%;
 }
 
 #notification-list .notification .material-icons {
@@ -117,5 +130,9 @@ form.navbar-form.navbar-right .btn-default:hover {
 
   #notification-list {
     margin-top: 50px;
+  }
+
+  #subheader {
+    margin-top: -40px;
   }
 }

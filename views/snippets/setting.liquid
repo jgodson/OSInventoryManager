@@ -36,13 +36,13 @@
             <label for="{{setting.name}}-{{ this.id }}">
               <input name="{{setting.name}}-{{ this.id }}" type="checkbox" 
                 {%- if current[this.id] -%}
-                  value="{{ current[this.id] }}"
-                  {%- if current[this.id] == true -%}
+                  value={{ current[this.id] }}
+                  {%- if current[this.id] == "true" -%}
                     checked
                   {%- endif -%}
                 {%- elsif this.default -%}
-                  value="{{ this.default }}"
-                  {%- if this.default == true -%}
+                  value={{ this.default }}
+                  {%- if this.default == "true" -%}
                     checked 
                   {%- endif -%}
                 {%- else -%}

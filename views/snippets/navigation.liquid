@@ -1,5 +1,5 @@
 <nav id="app-main-nav" class="navbar navbar-default">
-    <div class="container-fluid">
+  <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -15,38 +15,37 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="{% if template == "index" %}active{% endif %}"><a href="index"><span class="glyphicon glyphicon-tasks"></span>Dashboard<span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-barcode"></span>Inventory<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="inventory/list">List</a></li>
-            <li><a href="inventory/adjustments">Adjustments</a></li>
+          {% if logged_in %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-barcode"></span>Inventory<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li class="{% if template == "inventory-list" %}active{% endif %}"><a href="inventory/list">List</a></li>
+                <li class="{% if template == "inventory-adjustments" %}active{% endif %}"><a href="inventory/adjustments">Adjustments</a></li>
+              </ul>
+            </li>
+            <li class="{% if template contains "customers" %}active{% endif %}"><a href="customers"><span class="glyphicon glyphicon-user"></span>Customers</a></li>
           </ul>
-        </li>
-        <li class="{% if template contains "customers" %}active{% endif %}"><a href="customers"><span class="glyphicon glyphicon-user"></span>Customers</a></li>
+          <form action="search" class="navbar-form navbar-right">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </form>
+        {% endif %}
       </ul>
-      <form action="search" class="navbar-form navbar-right">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for...">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-          </span>
-        </div>
-      </form>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             {%- if logged_in -%}
-              {%- if options.user.name -%}
-                {{ options.user.name}}
-              {%- else -%}
-                {{ default.users.default_user }}
-              {%- endif -%}
+              {{ options.user.name | default: settings.users.default_user }}
             {%- else -%}
               Not logged in
             {%- endif -%}
             <span class="caret"></span></a>
           <ul class="dropdown-menu">
-          {%- if options.user -%}
+          {%- if logged_in -%}
             <li><a href="profile">Profile</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="settings">Settings</a></li>

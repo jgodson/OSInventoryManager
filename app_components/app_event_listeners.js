@@ -105,7 +105,7 @@ Notifier.on('showNotification', (details)=> {
       id: (number) generated 
       timeout: (number) default: settings_data
       allow_hide: (bool) default: true (settings_data can override)
-      icon_name: (string) default: "info" (material-icons only)
+      icon: (string) default: "info" (material-icons only)
       title: (string) default: "Notification Title"
       message: (string) default: "Notification Message"
     }

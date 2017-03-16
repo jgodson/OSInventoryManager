@@ -2,6 +2,7 @@ const path = require('path');
 const config = require(path.join(__dirname, 'app_config'));
 const utils = require(path.join(__dirname, 'utils'));
 const jQuery = require('jQuery');
+const layoutName = 'layout'; // Name of layout file to render
 
 // Global app settings will be available in any template rendered
 // If settings aren't present, defaults are used
@@ -29,7 +30,11 @@ function render(fileName, options = {}) {
   if (fileName === 'settings') {
     options.schema = require(`../${config.paths.config_folder}/settings_schema.json`);
   }
-  return engine.renderFile(fileName, { settings: mergedSettings, options: options, template: fileName });
+  return engine.renderFile(options.layout === false ? fileName : layoutName, { 
+    settings: mergedSettings,
+    options: options,
+    template: fileName 
+  });
 }
 
 module.exports = render;

@@ -1,9 +1,0 @@
-{% comment %} This is the main header file included in every template {% endcomment %}
-{%- assign user = options.user -%}
-{%- assign logged_in = user != nil or settings.users.required == false -%}
-
-{% comment %} These are settings overrirides that are configurable in the settings of the app {% endcomment %}
-{% include 'settings_override_css' %}
-
-{% comment %} This is the main navigation bar {% endcomment %}
-{% include 'navigation' %}

@@ -42,6 +42,7 @@ function handleFormSubmit(formAction, formData) {
 
 function handleShowNotification(details = {}) {
   details.id = ++NotificationID;
+  details.layout = false;
   render('notification', details)
     .then((html)=> {
       Notifier.emit('renderedNotification', html, details.id);

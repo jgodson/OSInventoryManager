@@ -1,0 +1,17 @@
+{%- assign user = options.user -%}
+{%- assign logged_in = false -%}
+{%- if user -%}
+  {%- assign logged_in = true -%}
+{%- elsif settings.users.required == "false" -%}
+  {%- assign logged_in = true -%}
+{% endif %}
+
+{% comment %} These are overrides for CSS that are configurable in the settings of the app {% endcomment %}
+{% include 'settings_override_css' %}
+
+{% comment %} This is where the nav bar, etc are {% endcomment %}
+{% include 'header' %}
+
+<div class="container">
+  {%- include {{ template }} -%}
+</div>
