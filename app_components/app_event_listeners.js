@@ -54,40 +54,30 @@ let currentFileWrites = [];
 let delay = undefined;
 
 // Shows rendered html on the page
-Visualizer.on('rendercomplete', (html)=> {
+Visualizer.on('render-complete', (html)=> {
+  appRoot.classList.remove('delay', 'delay-done');
   appRoot.innerHTML = html;
+
   // Init Material Design Elements
   $.material.init();
+
   // Adding a class after a short delay allows animations since we replace HTML
-  appRoot.classList.add('delay');
-  if (delay) {
-    // Reset delay timer
-    clearTimeout(delay);
-    delay = setTimeout( ()=> {
-      appRoot.classList.add('delay-done');
-      delay = undefined;
-    }, 100);
-  } else {
-    delay = setTimeout( ()=> {
-      appRoot.classList.add('delay-done');
-      delay = undefined;
-    }, 100);
-  }
+  delayForAnimations();
 });
 
-FileWriter.on('startCheck', (fileInfo)=> {
+FileWriter.on('start-check', (fileInfo)=> {
   // Do not write file if file is in use
   if (!currentFileWrites.includes(fileInfo.fileName)) {
     currentFileWrites.push(fileInfo.fileName);
     console.info(`[File Write] Ok to write ${fileInfo.fileName}`);
-    FileWriter.emit('startOk', fileInfo);
+    FileWriter.emit('start-ok', fileInfo);
   } else {
     console.warn(`[File Write] File ${fileInfo.fileName} is in use.`);
-    FileWriter.emit('startWait', fileInfo);
+    FileWriter.emit('start-wait', fileInfo);
   }
 });
 
-FileWriter.on('complete', (fileName)=> {
+FileWriter.on('write-complete', (fileName)=> {
   if (currentFileWrites.includes(fileName)) {
       console.info(`[File Write] ${fileName} written successfully!`);
       currentFileWrites.splice(currentFileWrites.indexOf(fileName), 1);
@@ -96,16 +86,30 @@ FileWriter.on('complete', (fileName)=> {
   }
 
   // Have to reload window for file changes to take effect
-  remote.getCurrentWindow().reload();
+  Notifier.emit('show-notification', {
+    allow_hide: false,
+    type: "success",
+    timeout: 4500,
+    icon: "sync_problem",
+    title: "Settings Saved Successfully!",
+    message: `In order for new settings to take effect, the app must be reloaded.<br/>
+      This will happen automatically in 5 seconds.`
+  });
+
+  // Reload after 5 seconds
+  setTimeout(()=> {
+    remote.getCurrentWindow().reload();
+  }, 5000);
 });
 
-Notifier.on('showNotification', (details)=> {
+Notifier.on('show-notification', (details)=> {
   /*
     Notification Schema = {
-      id: (number) generated 
-      timeout: (number) default: settings_data
-      allow_hide: (bool) default: true (settings_data can override)
-      icon: (string) default: "info" (material-icons only)
+      id: (number)(DO NOT SPECIFY) generated 
+      type: (string)(optional) "warning" or "success"
+      timeout: (number)(optional) default: from settings_data
+      allow_hide: (bool)(optional) default: true (settings_data can override)
+      icon: (string)(optional) default: "info" (material-icons only)
       title: (string) default: "Notification Title"
       message: (string) default: "Notification Message"
     }
@@ -113,7 +117,7 @@ Notifier.on('showNotification', (details)=> {
   handlers.notification.show(details);
 });
 
-Notifier.on('renderedNotification', (html, id)=> {
+Notifier.on('rendered-notification', (html, id)=> {
   $(notificationList).append(html);
   let _this = $(notificationList).find(`[data-id="${id}"]`);
   setTimeout(()=> _this.addClass('shown'), 100);
@@ -121,12 +125,12 @@ Notifier.on('renderedNotification', (html, id)=> {
   // If it doesn't timeout, it has to be closed by user
   if (notificationTimeout) {
     setTimeout(()=> {
-      Notifier.emit('hideNotification', id);
+      Notifier.emit('hide-notification', id);
     }, notificationTimeout);
   }
 });
 
-Notifier.on('hideNotification', (id)=> {
+Notifier.on('hide-notification', (id)=> {
   let hiding = $(notificationList).find(`[data-id="${id}"]`);
   hiding.removeClass('shown');
   setTimeout(()=> {
@@ -136,19 +140,17 @@ Notifier.on('hideNotification', (id)=> {
 
 $(document).on('click', '.notification-close', function(evt) {
   let id = $(this).closest('.notification').attr('data-id');
-  Notifier.emit('hideNotification', id);
+  Notifier.emit('hide-notification', id);
 });
 
 $(document).on('click', 'a[href]:not(a[href="#"])', function(evt) {
   evt.preventDefault();
-  appRoot.classList.remove('delay', 'delay-done');
   handlers.navigation(evt);
 });
 
 // Handle form submissions
 $(document).on('submit', 'form', function(evt) {
   evt.preventDefault();
-  appRoot.classList.remove('delay', 'delay-done');
   let $form = $(this).closest('form');
   let action = $form.attr('action');
   let data = formToJSON($form.serializeArray());
@@ -188,3 +190,20 @@ $(document).on('click', '.checkbox', function() {
     checkbox.checked = true;
   }
 });
+
+function delayForAnimations() {
+  appRoot.classList.add('delay');
+  if (delay) {
+    // Reset delay timer
+    clearTimeout(delay);
+    delay = setTimeout( ()=> {
+      appRoot.classList.add('delay-done');
+      delay = undefined;
+    }, 100);
+  } else {
+    delay = setTimeout( ()=> {
+      appRoot.classList.add('delay-done');
+      delay = undefined;
+    }, 100);
+  }
+}

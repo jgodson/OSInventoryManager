@@ -39,6 +39,12 @@ routes.forms = {
 
 function handleNoRoute(action) {
   console.warn(`[Missing Route] ${action}`);
+  Notifier.emit('show-notification', {
+    icon: "report_problem",
+    title: "Page Not Found",
+    message: `The page you tried to navigate to wasn't found or there was an error rendering it.
+      Please notify the app developers of this issue.`
+  });
 }
 
 function handleNoPermissions(action, user) {
@@ -50,7 +56,7 @@ function handleNavRoute(templateName) {
   if (history[history.length - 1] !== templateName) {
     return render(templateName)
       .then(html => {
-        Visualizer.emit('rendercomplete', html);
+        Visualizer.emit('render-complete', html);
         addToHistory(templateName);
       })
       .catch(error => {

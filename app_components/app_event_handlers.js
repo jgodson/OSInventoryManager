@@ -23,7 +23,8 @@ function handleNavigation(evt) {
           console.info(`[Route Success] ${action} took ${endTime - startTime}ms`);
         })
         .catch(err => {
-          console.warn(err);
+          // Called when already trying to navigate to current page
+          console.info(err);
         });
     } else {
       routes.noRoute(action);
@@ -45,7 +46,9 @@ function handleShowNotification(details = {}) {
   details.layout = false;
   render('notification', details)
     .then((html)=> {
-      Notifier.emit('renderedNotification', html, details.id);
+      Notifier.emit('rendered-notification', html, details.id);
+    }).catch((err)=> {
+      console.error(`[Render Error] ${err}`);
     });
 }
 
@@ -56,10 +59,8 @@ function handleLogIn() {
 // Log out user and return to dashboard
 function handleLogOut() {
   currentUser == undefined;
+  console.info(`[Log Out Success] Succesfully Logged Out`);
   routes['index']()
-    .then(() => {
-      console.info(`[Log Out Success] Succesfully Logged Out`);
-    })
     .catch(err => {
       console.warn(err);
     });

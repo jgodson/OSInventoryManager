@@ -12,9 +12,10 @@
   {% endif %}
 {% comment %} Finished find if notifications are hidden {% endcomment %}
 
+{% assign class = options.type %}
 {% assign timeout = options.timeout %}
 
-<div class="notification list-group-item" data-id="{{ options.id }}" 
+<div class="notification {% if class %}{{ class }}{% endif %} list-group-item" data-id="{{ options.id }}" 
   {% if allow_hide %}
     data-timeout="{{ timeout | default: settings.notifications.timeout }}"
   {% endif %}

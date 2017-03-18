@@ -7,17 +7,17 @@ const PATHMAP = {
   'settings_data.json': `./${config.paths.app_data}`
 }
 
-FileWriter.on('startOk', fileInfo => {
+FileWriter.on('start-ok', fileInfo => {
   handleStartWrite(fileInfo);
 });
 
-FileWriter.on('startWait', fileInfo => {
+FileWriter.on('start-wait', fileInfo => {
   // TODO, try again after a certain amount of time?
-  console.log("startWait");
+  console.info("[File Write] Waiting to write file");
 });
 
 function writeData(fileName, data) {
-  FileWriter.emit('startCheck', {
+  FileWriter.emit('start-check', {
     fileName: fileName,
     data: data
   });
@@ -44,7 +44,7 @@ function handleStartWrite(fileInfo) {
       console.error(err);
       return;
     }
-    FileWriter.emit('complete', fileInfo.fileName);
+    FileWriter.emit('write-complete', fileInfo.fileName);
   });
 }
 
