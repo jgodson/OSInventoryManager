@@ -1,19 +1,23 @@
 {% comment %} Find if notifications are hidden {% endcomment %}
-  {%- if options.allow_hide == false -%}
+  {% if options.allow_hide == false %}
     {% assign allow_hide = false %}
-  {%- elsif settings.notifications.allow_hide == false and options.allow_hide != true -%}
-    {% assign allow_hide = false %}
-  {%- else -%}
+  {% elsif options.allow_hide == true %}
     {% assign allow_hide = true %}
-  {%- endif -%}
+  {% else %}
+    {% if settings.notifications.manually_dismiss == "true" %}
+      {% assign allow_hide = false %}
+    {% else %}
+      {% assign allow_hide = true %}
+    {% endif %}
+  {% endif %}
 {% comment %} Finished find if notifications are hidden {% endcomment %}
 
-{%- assign timeout = options.timeout -%}
+{% assign timeout = options.timeout %}
 
 <div class="notification list-group-item" data-id="{{ options.id }}" 
-  {%- if allow_hide -%}
+  {% if allow_hide %}
     data-timeout="{{ timeout | default: settings.notifications.timeout }}"
-  {%- endif -%}
+  {% endif %}
 >
   <div class="row-action-primary icon__left">
     <i class="material-icons">{{ options.icon | default: "info" }}</i>

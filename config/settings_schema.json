@@ -53,10 +53,10 @@
     "content": "These settings customize how notifications are shown"
   }, {
     "type": "checkbox",
-    "id": "allow_hide",
-    "label": "Notifications Timeout",
-    "info": "Allow notifications to hide automatically. Uncheck to always manually dismiss",
-    "default": "true"
+    "id": "manually_dismiss",
+    "label": "Always Manually Dismiss",
+    "info": "Require clicking the X or the 'CLOSE' button on notifications before they disappear",
+    "default": "false"
   }, {
     "type": "number",
     "id": "timeout",

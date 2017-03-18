@@ -1,5 +1,7 @@
 {% include 'save-cancel_form', section: "start" %}
 
+{% comment %} NOTE: Checkbox type settings need to always default to false as there is no value saved for them when they are set to false. {% endcomment %}
+
 <div class="col-sm-12 col-md-8 col-md-offset-2 settings__list">
   {% for setting in options.schema %}
     <div class="well row">
