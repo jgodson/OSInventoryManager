@@ -1,6 +1,5 @@
 const config = require(path.join(__dirname, 'app_config'));
 const render = require(path.join(__dirname, `render`));
-const file = require(path.join(__dirname, 'file_ops'));
 
 // Keep track of last page that user was on (for cancel/go back commands)
 let history = [];
@@ -8,36 +7,32 @@ let history = [];
 // Regular Links
 const routes = {
   index() {
-    return handleNavRoute('index');
+    return goTo('index');
   },
   parts() {
-    return handleNavRoute('parts');
+    return goTo('parts');
   },
   settings() {
-    return handleNavRoute('settings');
+    return goTo('settings');
   },
   customers() {
-    return handleNavRoute('customers');
+    return goTo('customers');
+  },
+  login() {
+    return goTo('login');
   },
   goBack() {
-    return handleGoBackRoute();
+    return goBack();
   },
   cancel() {
-    return handleGoBackRoute();
+    return goBack();
   },
   noRoute(action) {
-    handleNoRoute(action);
+    noRoute(action);
   }
 }
 
-// Form Submissions
-routes.forms = {
-  settings_save(formData) {
-    handleSettingsSaveRoute(formData);
-  }
-}
-
-function handleNoRoute(action) {
+function noRoute(action) {
   console.warn(`[Missing Route] ${action}`);
   Notifier.emit('show-notification', {
     icon: "report_problem",
@@ -47,11 +42,7 @@ function handleNoRoute(action) {
   });
 }
 
-function handleNoPermissions(action, user) {
-  console.warn(`[Access Denied] User ${user} does not have permission to go do ${action}`);
-}
-
-function handleNavRoute(templateName) {
+function goTo(templateName) {
   // Don't re-render the same template
   if (history[history.length - 1] !== templateName) {
     return render(templateName)
@@ -69,14 +60,8 @@ function handleNavRoute(templateName) {
   }
 }
 
-function handleSettingsSaveRoute(formData) {
-  // Name of settings data file
-  const fileName = 'settings_data.json';
-  file.writeData(fileName, formData);
-}
-
-function handleGoBackRoute() {
-  return handleNavRoute(history[length - 1] || history[0]);
+function goBack() {
+  return goTo(history[length - 1] || history[0]);
 }
 
 function addToHistory(templateName) {

@@ -1,10 +1,8 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
 const handlers = require(`../${config.paths.components_folder}/app_event_handlers`);
-const remote = require('electron').remote;
 const EventEmitter = require('events').EventEmitter;
 const Visualizer = require(path.join(__dirname, `../${config.paths.components_folder}/Visualizer`));
-const FileWriter = require(path.join(__dirname, `../${config.paths.components_folder}/FileWriter`));
 const Notifier = require(path.join(__dirname, `../${config.paths.components_folder}/Notifier`));
 
 // Document Element Selectors that are used frequently
@@ -47,9 +45,6 @@ console.warn = function() {
   return realConsole.warn.apply(console, arguments);
 }
 
-// Keep track of files currently being written
-let currentFileWrites = [];
-
 // Keep track of the delay after page loads to allow for animations
 let delay = undefined;
 
@@ -63,43 +58,6 @@ Visualizer.on('render-complete', (html)=> {
 
   // Adding a class after a short delay allows animations since we replace HTML
   delayForAnimations();
-});
-
-FileWriter.on('start-check', (fileInfo)=> {
-  // Do not write file if file is in use
-  if (!currentFileWrites.includes(fileInfo.fileName)) {
-    currentFileWrites.push(fileInfo.fileName);
-    console.info(`[File Write] Ok to write ${fileInfo.fileName}`);
-    FileWriter.emit('start-ok', fileInfo);
-  } else {
-    console.warn(`[File Write] File ${fileInfo.fileName} is in use.`);
-    FileWriter.emit('start-wait', fileInfo);
-  }
-});
-
-FileWriter.on('write-complete', (fileName)=> {
-  if (currentFileWrites.includes(fileName)) {
-      console.info(`[File Write] ${fileName} written successfully!`);
-      currentFileWrites.splice(currentFileWrites.indexOf(fileName), 1);
-  } else {
-    console.warn(`[File Write] FileWriter received 'complete' event on file that wasn't added to 'currentFileWrites'`);
-  }
-
-  // Have to reload window for file changes to take effect
-  Notifier.emit('show-notification', {
-    allow_hide: false,
-    type: "success",
-    timeout: 4500,
-    icon: "sync_problem",
-    title: "Settings Saved Successfully!",
-    message: `In order for new settings to take effect, the app must be reloaded.<br/>
-      This will happen automatically in 5 seconds.`
-  });
-
-  // Reload after 5 seconds
-  setTimeout(()=> {
-    remote.getCurrentWindow().reload();
-  }, 5000);
 });
 
 Notifier.on('show-notification', (details)=> {
@@ -145,7 +103,7 @@ $(document).on('click', '.notification-close', function(evt) {
 
 $(document).on('click', 'a[href]:not(a[href="#"])', function(evt) {
   evt.preventDefault();
-  handlers.navigation(evt);
+  handlers.navigateTo(evt);
 });
 
 // Handle form submissions
@@ -154,7 +112,7 @@ $(document).on('submit', 'form', function(evt) {
   let $form = $(this).closest('form');
   let action = $form.attr('action');
   let data = formToJSON($form.serializeArray());
-  handlers.form(action, data);
+  handlers.formSubmit(action, data);
 
   // Converts form data in an array to JSON
   function formToJSON(data) {
