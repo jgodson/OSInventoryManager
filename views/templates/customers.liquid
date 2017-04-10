@@ -1,3 +1,31 @@
 <div class="col-sm-12 col-md-10 col-md-offset-1">
-  <h1>{{ template | capitalize }}</h1>
+  <h1 class="text-center">{{ template | capitalize }}</h1>
+  <table class="table table-striped table-hover">
+    <tbody>
+      <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Customer Since</th>
+          <th>Total Spent</th>
+          <th>Amount Owing</th>
+          <th>Details</th>
+          <th>Invoices</th>
+        </tr>
+      {% for customer in options.customer_list %}
+        <tr>
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.created_at }}</td>
+          <td>{{ customer.total_spent }}</td>
+          <td>{{ customer.current_owing }}</td>
+          <td><a href="customers/details/{{ customer.id }}">View Details</a></td>
+          <td><a href="customers/invoices/{{ customer.id }}">View Invoices</a></td>
+        </tr>
+      {% else %}
+        <tr>
+          <td class="success text-center" colspan="7">No customers yet. <a href="customers/create">Create One</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>

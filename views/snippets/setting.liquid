@@ -18,7 +18,7 @@
           <input name="{{setting.name}}-{{ this.id }}" class="form-control" type="color" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>
           {% if this.info %}<span class="help-block">{{ this.info }}</span>{% endif %}
         </div>
-      {% when 'password' %}
+      {% when 'password' %}{% comment %} Not sure this will be used anymore {% endcomment %}
         <div class="form-group label-floating col-xs-12 col-sm-6">
           <label for="{{setting.name}}-{{ this.id }}" class="control-label">{{ this.label }}</label>
           <input name="{{setting.name}}-{{ this.id }}" class="form-control" type="password" {%- if current[this.id] -%}value="{{ current[this.id] }}"{%- elsif this.default -%}value="{{ this.default }}"{%- endif -%}/>

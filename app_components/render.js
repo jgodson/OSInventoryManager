@@ -30,6 +30,7 @@ function render(fileName, options = {}) {
   if (fileName === 'settings') {
     options.schema = require(`../${config.paths.config_folder}/settings_schema.json`);
   }
+  
   return engine.renderFile(options.layout === false ? fileName : layoutName, { 
     settings: mergedSettings,
     options: options,

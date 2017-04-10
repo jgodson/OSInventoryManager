@@ -2,10 +2,10 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
-// Find out wether we are in development or production
+// Find out wether we are in development or production TODO: find a better way
 try {
   // For auto reload during development
-  //require('electron-reload')(__dirname);
+  require('electron-reload')(__dirname);
   process.env['NODE_ENV'] = 'development';
 } catch (e) {
   process.env['NODE_ENV'] = 'production'

@@ -12,12 +12,17 @@
   {% endif %}
 {% comment %} Finished find if notifications are hidden {% endcomment %}
 
+{% comment %} Assign some other properties for the notification {% endcomment %}
 {% assign class = options.type %}
+
 {% assign timeout = options.timeout %}
+{% unless timeout %}
+  {% assign timeout = settings.notifications.timeout | times: 1000 %}
+{% endunless %}
 
 <div class="notification {% if class %}{{ class }}{% endif %} list-group-item" data-id="{{ options.id }}" 
   {% if allow_hide %}
-    data-timeout="{{ timeout | default: settings.notifications.timeout }}"
+    data-timeout="{{ timeout }}"
   {% endif %}
 >
   <div class="row-action-primary icon__left">

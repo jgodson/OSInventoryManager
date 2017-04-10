@@ -15,7 +15,7 @@ const routes = {
   settings() {
     return goTo('settings');
   },
-  customers() {
+  customers_list() {
     return goTo('customers');
   },
   login() {
@@ -65,7 +65,7 @@ function goBack() {
 }
 
 function addToHistory(templateName) {
-  if ( history.length < 2 ) {
+  if (history.length < 2) {
     history.push(templateName);
   } else {
     history.shift();

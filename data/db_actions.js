@@ -20,12 +20,15 @@ function createUser(name, details) {
     username = name.replace(/\b\s+\b/g, '').toLowerCase();
   }
   name = name.trim().split(' ');
+  // TODO: Remove force for production
   User.sync({force: true}).then(()=> {
     // Table created
     return User.create({
       username: username,
       firstName: name[0],
-      lastName: name[1] || ''
+      lastName: name[1] || '',
+      isAdmin: details.isAdmin || false,
+      restrictions: details.restrictions || ''
     });
   });
 }

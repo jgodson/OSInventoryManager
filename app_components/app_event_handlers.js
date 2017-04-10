@@ -22,11 +22,11 @@ function navigateTo(evt) {
   if (typeof routes[action] === 'function') {
     // TODO: ensure user has permission for route
     routes[action]()
-      .then(() => {
+      .then(()=> {
         const endTime = Date.now();
         console.info(`[Route Success] ${action} took ${endTime - startTime}ms`);
       })
-      .catch(err => {
+      .catch((err)=> {
         // Called when already trying to navigate to current page
         console.info(err);
       });
@@ -39,7 +39,7 @@ function navigateTo(evt) {
 function formSubmit(formAction, formData) {
   formAction = replaceSlash(formAction);
   console.info(`[Form Submit] ${formAction}`);
-    // handle account actions here
+  // handle account actions here
   if (typeof formActions[formAction] === 'function') {
     formActions[formAction](formData);
   } else {
@@ -81,14 +81,16 @@ formActions = {
         }, 5000);
       })
       .catch((e)=> {
-
+        realConsole.log(e);
       });
   },
   login(formData) {
     // TODO find user and set currentUser to that user. Redirect to index
+    realConsole.log(formData);
   },
   search(formData) {
     // TODO: Do something
+    realConsole.log(formData);
   },
   logOut() {
     // Log out user and return to dashboard

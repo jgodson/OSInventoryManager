@@ -1,7 +1,6 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
 const handlers = require(`../${config.paths.components_folder}/app_event_handlers`);
-const EventEmitter = require('events').EventEmitter;
 const Visualizer = require(path.join(__dirname, `../${config.paths.components_folder}/Visualizer`));
 const Notifier = require(path.join(__dirname, `../${config.paths.components_folder}/Notifier`));
 
@@ -9,15 +8,11 @@ const Notifier = require(path.join(__dirname, `../${config.paths.components_fold
 const appRoot = document.querySelector('#app-root');
 const notificationList = document.querySelector('#notification-list');
 
-// TODO: Because this file is called in index.html everything is available globally.
-// Need to move things into their own file that shouldn't be available like that
-
-// TODO: put the console overwrites in it's own file
-// Also I can prepend the current time to the log here
+// TODO: prepend the current time to the log here and log to a file instead
 
 let logs = [];
 
-// Overwrite console.log, error, infom and warn to log to file as well
+// Overwrite console.log, error, info and warn to log to file as well
 let realConsole = {
   log: console.log,
   error: console.error,
@@ -58,18 +53,23 @@ Visualizer.on('render-complete', (html)=> {
 
   // Adding a class after a short delay allows animations since we replace HTML
   delayForAnimations();
+  
+  // Run any page specific scripts
+  $('.page-script').each((index, script)=> {
+    eval(script.text);
+  });
 });
 
 Notifier.on('show-notification', (details)=> {
   /*
     Notification Schema = {
-      id: (number)(DO NOT SPECIFY) generated 
-      type: (string)(optional) "warning" or "success"
-      timeout: (number)(optional) default: from settings_data
-      allow_hide: (bool)(optional) default: true (settings_data can override)
-      icon: (string)(optional) default: "info" (material-icons only)
-      title: (string) default: "Notification Title"
-      message: (string) default: "Notification Message"
+      id: (number) - generated 
+      type: (string)(optional) - "warning" or "success"
+      timeout: (number)(optional) - milliseconds to display for - default: from settings_data
+      allow_hide: (bool)(optional) - default: true (settings_data can override)
+      icon: (string)(optional) - default: "info" (material-icons only)
+      title: (string) - default: "Notification Title"
+      message: (string) - default: "Notification Message"
     }
   */
   handlers.notification.show(details);
@@ -154,12 +154,12 @@ function delayForAnimations() {
   if (delay) {
     // Reset delay timer
     clearTimeout(delay);
-    delay = setTimeout( ()=> {
+    delay = setTimeout(()=> {
       appRoot.classList.add('delay-done');
       delay = undefined;
     }, 100);
   } else {
-    delay = setTimeout( ()=> {
+    delay = setTimeout(()=> {
       appRoot.classList.add('delay-done');
       delay = undefined;
     }, 100);

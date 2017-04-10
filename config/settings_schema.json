@@ -61,7 +61,7 @@
     "type": "number",
     "id": "timeout",
     "label": "Default Timeout",
-    "info": "How long to show notifications for. (Seconds x 1000)",
+    "info": "How long to show for (in seconds)",
     "default": "6000"
   }]
 }]
