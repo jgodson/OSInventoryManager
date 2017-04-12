@@ -47,40 +47,46 @@ function noRoute(action) {
 }
 
 function forward(primary, secondary) {
+  // Split into secondary [0] and attribute [1] (id, etc)
+  secondary = secondary.split('/');
   let forwardTo = FORWARDS[primary];
   if (forwardTo) {
-    if (forwardTo[secondary]) {
-      return goTo(forwardTo[secondary]);
+    if (typeof forwardTo[secondary[0]] === 'string') {
+      return goTo(forwardTo[secondary[0]]);
+    } else if (typeof forwardTo[secondary[0]] === 'function') {
+      // Call function with attribute
+      return forwardTo[secondary[0]](secondary[1])
+        .then((details)=> {
+          return goTo(`${primary}_${secondary[0]}`, details);
+        });
     } else {
-      // Resolve with a failure
-      return Promise.resolve(true);
+      return Promise.reject('noroute');
     }
   } else {
-    // Resolve with a failure
-    return Promise.resolve(true);
+    return Promise.reject('noroute');
   }
 }
 
-function goTo(templateName) {
+function goTo(templateName, attributes) {
   // Don't re-render the same template
   if (history[history.length - 1] !== templateName) {
-    return render(templateName)
+    return render(templateName, attributes)
       .then((html)=> {
         Visualizer.emit('render-complete', html);
         addToHistory(templateName);
       })
       .catch((error)=> {
-        console.warn(`[Render Error] ${error}`);
+        return Promise.reject(`[Render Error] ${error}`);
       });
   } else {
-    return new Promise((resolve, reject)=> {
-      reject(`[Info] Already on ${templateName}`);
-    });
+    return Promise.reject(`[Info] Already on ${templateName}`);
   }
 }
 
 function goBack() {
-  return goTo(history[length - 1] || history[0]);
+  let backTo = history[length - 1] || history[0];
+  backTo = backTo.split('_');
+  return routes[backTo[0]](backTo[1]);
 }
 
 function addToHistory(templateName) {

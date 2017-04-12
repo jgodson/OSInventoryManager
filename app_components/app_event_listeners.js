@@ -1,6 +1,6 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
-const handlers = require(`../${config.paths.components_folder}/app_event_handlers`);
+const handlers = require(path.join(__dirname, `../${config.paths.components_folder}/app_event_handlers`));
 const Visualizer = require(path.join(__dirname, `../${config.paths.components_folder}/Visualizer`));
 const Notifier = require(path.join(__dirname, `../${config.paths.components_folder}/Notifier`));
 
@@ -20,25 +20,25 @@ let realConsole = {
   warn: console.warn
 };
 
-console.info = function() {
-  logs.push(arguments[0]);
-  return realConsole.info.apply(console, arguments);
-}
+// console.info = function() {
+//   logs.push(arguments[0]);
+//   return realConsole.info.apply(console, arguments);
+// }
 
-console.error = function() {
-  logs.push(arguments[0]);
-  return realConsole.error.apply(console, arguments);
-}
+// console.error = function() {
+//   logs.push(arguments[0]);
+//   return realConsole.error.apply(console, arguments);
+// }
 
-console.log = function() {
-  logs.push(arguments[0]);
-  return realConsole.log.apply(console, arguments);
-}
+// console.log = function() {
+//   logs.push(arguments[0]);
+//   return realConsole.log.apply(console, arguments);
+// }
 
-console.warn = function() {
-  logs.push(arguments[0]);
-  return realConsole.warn.apply(console, arguments);
-}
+// console.warn = function() {
+//   logs.push(arguments[0]);
+//   return realConsole.warn.apply(console, arguments);
+// }
 
 // Keep track of the delay after page loads to allow for animations
 let delay = undefined;

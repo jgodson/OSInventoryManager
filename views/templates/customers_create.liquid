@@ -1,0 +1,25 @@
+<div class="col-sm-12 col-md-10 col-md-offset-1">
+  <div class="well">
+    <h1 class="text-center">New Customer</h1>
+    <form action="customers/create">
+      <fieldset>
+        <div class="form-group label-floating">
+          <label class="control-label" for="firstName">First Name</label>
+          <input name="customer-firstName" class="form-control" id="firstName" type="text">
+        </div>
+        <div class="form-group label-floating">
+          <label class="control-label" for="lastName">Last Name</label>
+          <input name="customer-lastName" class="form-control" id="lastName" type="text">
+        </div>
+        <div class="form-group label-floating">
+          <label class="control-label" for="company">Company</label>
+          <input name="customer-company" class="form-control" id="company" type="text">
+        </div>
+        <div class="form-group float-right">
+            <a href="cancel" type="button" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

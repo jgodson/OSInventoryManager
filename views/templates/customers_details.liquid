@@ -1,0 +1,23 @@
+{% assign customer = options.customer %}
+<div class="col-sm-12 col-md-10 col-md-offset-1">
+  {% if customer %}
+    <div class="well">
+      {% if customer.firstName != blank or customer.lastName != blank %}
+        <h1>Name: {{ customer.firstName }} {{ customer.lastName }}</h1>
+      {% endif %}
+      {% if customer.company %}
+        <h3>Company: {{ customer.company}}</h3>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="alert alert-danger">
+      There was a problem retreiving customer details. Please try again.
+    </div>
+  {% endif %}
+  <div class="form-group float-right">
+    <a href="goBack" type="button" class="btn btn-default">Go Back</a>
+    {% if customer %}
+      <a href="customers/edit/{{ customer.id }}" type="button" class="btn btn-primary">Edit</button>
+    {% endif %}
+  </div>
+</div>

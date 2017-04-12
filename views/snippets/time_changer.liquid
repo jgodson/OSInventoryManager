@@ -15,6 +15,8 @@
       let AMPM = hours >= 12 ? 'PM' : 'AM';
       if (hours > 12) {
         hours -= 12;
+      } else if (hours === 0) {
+        hours += 12;
       }
       let minutes = newTime.getMinutes();
       if (minutes < 10) {

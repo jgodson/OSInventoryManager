@@ -3,7 +3,7 @@ const config = require(path.join(__dirname, '../app_components/app_config'));
 const DB = require(`../${config.paths.data_folder}/db_actions`);
 const remote = require('electron').remote;
 const User = require(`../${config.paths.models_folder}/user`);
-const routes = require(`../${config.paths.components_folder}/routes`);
+const routes = require(`../${config.paths.components_folder}/router`);
 const render = require(path.join(__dirname, `render`));
 const file = require(path.join(__dirname, 'file_writer'));
 
@@ -23,24 +23,27 @@ function navigateTo(evt) {
   if (typeof routes[route[0]] === 'function') {
     // TODO: ensure user has permission for route
     routes[route[0]](route[1])
-      .then((failed)=> {
-        routed(action, startTime, failed);
+      .then(()=> {
+        routed(action, startTime);
       })
-      .catch((err)=> {
-        // Called when trying to navigate to current page
-        console.info(err);
+      .catch((error)=> {
+        routed(action, startTime, error);
       });
   } else {
-    routed(action, startTime, true);
+    routed(action, startTime, 'noroute');
   }
 }
 
-function routed(action, startTime, failed) {
+function routed(action, startTime, error) {
   const endTime = Date.now();
-  if (!failed) {
+  if (!error) {
     console.info(`[Route Success] ${action} took ${endTime - startTime}ms`);
   } else {
-    routes.noRoute(action);
+    if (error === 'noroute') {
+      routes.noRoute(action);
+    } else {
+      console.error(error);
+    }
     console.info(`[Route Fail] ${action} took ${endTime - startTime}ms`);
   }
 }
@@ -94,6 +97,31 @@ formActions = {
       .catch((e)=> {
         realConsole.log(e);
       });
+  },
+  users_create(formData) {
+    realConsole.log(formData);
+  },
+  customers_create(formData) {
+    realConsole.log(formData);
+    DB.customers.create(formData.customer)
+      .then(()=> {
+        Notifier.emit('show-notification', {
+          type: "success",
+          icon: "person_add",
+          title: "Customer Created!",
+          message: `Customer was successfully created!`
+        });
+        return routes['customers']('list');
+      })
+      .catch((error)=> {
+        console.log(error);
+        Notifier.emit('show-notification', {
+          type: "warning",
+          icon: "error",
+          title: "Error Creating Customer!",
+          message: `There was a problem creating a new customer. Please try again.`
+        });
+      })
   },
   login(formData) {
     // TODO find user and set currentUser to that user. Redirect to index

@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db');
 
-const User = sequelize.define('user', {
-    username: {
-      type: Sequelize.STRING,
-      unique: true
+const Customer = sequelize.define('customer', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
     firstName: {
       type: Sequelize.STRING
@@ -12,14 +13,11 @@ const User = sequelize.define('user', {
     lastName: {
       type: Sequelize.STRING
     }, 
-    isAdmin: {
+    company: {
       type: Sequelize.BOOLEAN 
-    },
-    restrictions: {
-      type: Sequelize.STRING
     }
   }, {
   freezeTableName: true // Model tableName will be the same as the model name
 });
 
-module.exports = User;
+module.exports = Customer;

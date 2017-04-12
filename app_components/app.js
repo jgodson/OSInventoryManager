@@ -1,4 +1,4 @@
-const routes = require('./routes');
+const routes = require('./router');
 
 // Render initial view 
 routes.index();
