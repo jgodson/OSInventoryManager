@@ -54,10 +54,16 @@ Visualizer.on('render-complete', (html)=> {
   // Adding a class after a short delay allows animations since we replace HTML
   delayForAnimations();
   
+  // Fire unload Event
+  documentEvent('unload');
+
   // Run any page specific scripts
   $('.page-script').each((index, script)=> {
     eval(script.text);
   });
+
+  // Fire load Event
+  documentEvent('load');
 });
 
 Notifier.on('show-notification', (details)=> {
@@ -164,4 +170,8 @@ function delayForAnimations() {
       delay = undefined;
     }, 100);
   }
+}
+
+function documentEvent(name) {
+  document.dispatchEvent(new Event(name));
 }

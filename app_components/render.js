@@ -2,7 +2,9 @@ const path = require('path');
 const config = require(path.join(__dirname, 'app_config'));
 const utils = require(path.join(__dirname, 'utils'));
 const jQuery = require('jQuery');
-const layoutName = 'layout'; // Name of layout file to render
+
+// Name of layout file to render
+const LAYOUT_NAME = 'layout';
 
 // Global app settings will be available in any template rendered
 // If settings aren't present, defaults are used
@@ -12,7 +14,7 @@ const mergedSettings = {};
 jQuery.extend(true, mergedSettings, defaultSettings, settings);
 
 // Set up folders for liquid files
-const folders = {
+const FOLDERS = {
   templates: path.resolve(__dirname, `../${config.paths.templates_folder}`),
   css: path.resolve(__dirname, `../${config.paths.liquid_css_folder}`),
   snippets: path.resolve(__dirname, `../${config.paths.snippets_folder}`)
@@ -20,7 +22,7 @@ const folders = {
 
 const Liquid = require('shopify-liquid');
 const engine = Liquid({
-  root: [folders.templates, folders.snippets, folders.css],  // dirs to lookup layouts/includes
+  root: [FOLDERS.templates, FOLDERS.snippets, FOLDERS.css],  // dirs to lookup layouts/includes
   extname: '.liquid' // the default extname used for layouts/includes
 });
 
@@ -31,7 +33,7 @@ function render(fileName, options = {}) {
     options.schema = require(`../${config.paths.config_folder}/settings_schema.json`);
   }
   
-  return engine.renderFile(options.layout === false ? fileName : layoutName, { 
+  return engine.renderFile(options.layout === false ? fileName : LAYOUT_NAME, { 
     settings: mergedSettings,
     options: options,
     template: fileName 

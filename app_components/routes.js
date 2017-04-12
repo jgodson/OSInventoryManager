@@ -1,6 +1,10 @@
 const config = require(path.join(__dirname, 'app_config'));
 const render = require(path.join(__dirname, `render`));
 
+const FORWARDS = {
+  customers: require(path.join(__dirname, './routes/customers'))
+}
+
 // Keep track of last page that user was on (for cancel/go back commands)
 let history = [];
 
@@ -15,8 +19,8 @@ const routes = {
   settings() {
     return goTo('settings');
   },
-  customers_list() {
-    return goTo('customers');
+  customers(action) {
+    return forward('customers', action);
   },
   login() {
     return goTo('login');
@@ -42,19 +46,34 @@ function noRoute(action) {
   });
 }
 
+function forward(primary, secondary) {
+  let forwardTo = FORWARDS[primary];
+  if (forwardTo) {
+    if (forwardTo[secondary]) {
+      return goTo(forwardTo[secondary]);
+    } else {
+      // Resolve with a failure
+      return Promise.resolve(true);
+    }
+  } else {
+    // Resolve with a failure
+    return Promise.resolve(true);
+  }
+}
+
 function goTo(templateName) {
   // Don't re-render the same template
   if (history[history.length - 1] !== templateName) {
     return render(templateName)
-      .then(html => {
+      .then((html)=> {
         Visualizer.emit('render-complete', html);
         addToHistory(templateName);
       })
-      .catch(error => {
+      .catch((error)=> {
         console.warn(`[Render Error] ${error}`);
       });
   } else {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject)=> {
       reject(`[Info] Already on ${templateName}`);
     });
   }

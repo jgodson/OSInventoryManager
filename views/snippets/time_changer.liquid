@@ -1,7 +1,7 @@
 <script class="page-script">
   // Keep dashboard page updated
   let currentMinute = new Date().getMinutes();
-  setInterval(()=> {
+  let clockInterval = setInterval(()=> {
     let date = new Date();
     let minute = date.getMinutes();
     if (minute != currentMinute) {
@@ -23,4 +23,9 @@
       container.innerText = `${hours}:${minutes} ${AMPM}`;
     }
   }, 5000);
+
+  // Clear interval when template is changed
+  document.addEventListener('unload', ()=> {
+    clearInterval(clockInterval);
+  });
 </script>

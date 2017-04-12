@@ -17,26 +17,37 @@ let NotificationID = 0;
 function navigateTo(evt) {
   const startTime = Date.now();
   let action = $(evt.target).attr('href') || $(evt.target).parent().attr('href');
-  action = replaceSlash(action);
+  // Split action into primary [0] and secondary [1]
+  let route = action.split('/');
   console.info(`[Route Called] ${action}`);
-  if (typeof routes[action] === 'function') {
+  if (typeof routes[route[0]] === 'function') {
     // TODO: ensure user has permission for route
-    routes[action]()
-      .then(()=> {
-        const endTime = Date.now();
-        console.info(`[Route Success] ${action} took ${endTime - startTime}ms`);
+    routes[route[0]](route[1])
+      .then((failed)=> {
+        routed(action, startTime, failed);
       })
       .catch((err)=> {
-        // Called when already trying to navigate to current page
+        // Called when trying to navigate to current page
         console.info(err);
       });
-    } else {
-      routes.noRoute(action);
-    }
+  } else {
+    routed(action, startTime, true);
+  }
+}
+
+function routed(action, startTime, failed) {
+  const endTime = Date.now();
+  if (!failed) {
+    console.info(`[Route Success] ${action} took ${endTime - startTime}ms`);
+  } else {
+    routes.noRoute(action);
+    console.info(`[Route Fail] ${action} took ${endTime - startTime}ms`);
+  }
 }
 
 // Handle form actions here
 function formSubmit(formAction, formData) {
+  // TODO: ensure user has permission
   formAction = replaceSlash(formAction);
   console.info(`[Form Submit] ${formAction}`);
   // handle account actions here
@@ -92,7 +103,7 @@ formActions = {
     // TODO: Do something
     realConsole.log(formData);
   },
-  logOut() {
+  logout() {
     // Log out user and return to dashboard
     currentUser == undefined;
     console.info(`[Log Out Success] Succesfully Logged Out`);

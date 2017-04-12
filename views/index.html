@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>OS InventoryManager</title>
+    <!-- App Fonts & CSS -->
     <link rel="stylesheet" type="text/css" href="../assets/fonts/roboto/roboto.css">
     <link rel="stylesheet" type="text/css" href="../assets/fonts/material-icons/material-icons.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
@@ -14,8 +15,9 @@
     <!-- Notifications show up here -->
     <div id="notification-list" class="list-group"></div>
     
-    <!-- App Content Populated Here -->
+    <!-- App content populated here -->
     <div id='app-root'></div>
+
     <!-- jQuery -->
     <script>window.$ = window.jQuery = require('jquery');</script>
 
@@ -29,7 +31,6 @@
 
     <!-- This is where the app actually loads -->
     <script>
-      $.material.init();
       require('../app_components/app');
     </script>
   </body>
