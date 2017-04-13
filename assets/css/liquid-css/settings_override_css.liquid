@@ -38,6 +38,11 @@
   a, a:focus, a:hover {
     color: {{ accent_color }};
   }
+
+  .navbar .dropdown-menu .active > a, .navbar.navbar-default .dropdown-menu .active > a {
+    color: {{ main_color }};
+    background: none;
+  }
   {% comment %} <------ End Bootstrap Overrides ------> {% endcomment %}
 
 </style>

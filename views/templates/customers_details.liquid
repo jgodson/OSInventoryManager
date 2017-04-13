@@ -3,11 +3,12 @@
   {% if customer %}
     <div class="well">
       {% if customer.firstName != blank or customer.lastName != blank %}
-        <h1>Name: {{ customer.firstName }} {{ customer.lastName }}</h1>
+        <h2 class="text-center">{{ customer.firstName }} {{ customer.lastName }}</h2>
       {% endif %}
       {% if customer.company %}
-        <h3>Company: {{ customer.company}}</h3>
+        <h4 class="text-center">{{ customer.company}}</h4>
       {% endif %}
+      <h5 class="text-center">Customer Since: {{ customer.createdAt | date: '%b %d, %Y'}}</h5>
     </div>
   {% else %}
     <div class="alert alert-danger">

@@ -43,7 +43,7 @@
     "type": "text",
     "id": "default_user",
     "label": "Default User",
-    "info": "Name to show when user's aren't required",
+    "info": "Name to show when users aren't required",
     "default": "App User"
   }]
 }, {

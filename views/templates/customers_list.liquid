@@ -5,29 +5,31 @@
       <tbody>
         <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th colspan="2">Name/Company</th>
             <th>Customer Since</th>
             <th>Total Spent</th>
             <th>Amount Owing</th>
             <th>Details</th>
             <th>Invoices</th>
           </tr>
-        {% for customer in options.customer_list %}
-          <tr>
-            <td>{{ customer.id }}</td>
-            <td>{{ customer.firstName }} {{ customer.lastName }}</td>
-            <td>{{ customer.createdAt }}</td>
-            <td>{{ customer.total_spent }}</td>
-            <td>{{ customer.current_owing }}</td>
-            <td><a href="customers/details/{{ customer.id }}">View Details</a></td>
-            <td><a href="customers/invoices/{{ customer.id }}">View Invoices</a></td>
-          </tr>
+        {% if options.customer_list %}
+          {% for customer in options.customer_list %}
+            <tr>
+              <td>{{ customer.id }}</td>
+              <td colspan="2">{{ customer.firstName }} {{ customer.lastName }}{% if customer.company %} - {{ customer.company }}{% endif %}</td>
+              <td>{{ customer.createdAt | date: '%b %d, %Y'}}</td>
+              <td>{{ customer.total_spent }}</td>
+              <td>{{ customer.current_owing }}</td>
+              <td><a href="customers/details/{{ customer.id }}">View Details</a></td>
+              <td><a href="customers/invoices/{{ customer.id }}">View Invoices</a></td>
+            </tr>
+          {% endfor %}
+          <td class="success text-center" colspan="8"><a href="customers/create">Create New Customer</a></td>
         {% else %}
           <tr>
-            <td class="success text-center" colspan="7">No customers yet. <a href="customers/create">Create One</a></td>
+            <td class="success text-center" colspan="8">No customers yet. <a href="customers/create">Create One</a></td>
           </tr>
-        {% endfor %}
-          <td class="success text-center" colspan="7"><a href="customers/create">Create New Customer</a></td>
+        {% endif %}
       </tbody>
     </table>
   {% else %}

@@ -14,7 +14,7 @@
 <div id="template__{{ template }}" class="col-xs-12 col-sm-10 col-sm-offset-1">
   {% if logged_in %}
     <h1 id="time" class="text-center">{{ "now" | date: '%l:%M %p' | strip }}</h1>
-    <h3 class="text-center">{{ "now" | date: '%A, %B %e' }}</h3>
+    <h3 class="text-center">{{ "now" | date: '%A, %B %d' }}</h3>
     <h3 class="text-center">Good {{ greeting | strip }}, {{ options.user.name | default: settings.users.default_user }}</h3>
 
     {% include 'time_changer' %}

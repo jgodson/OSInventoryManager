@@ -12,9 +12,9 @@ const DB = require('./db');
 const User = require(`../${config.paths.models_folder}/user`);
 const Customer = require(`../${config.paths.models_folder}/customer`);
 
-// Reset the tables
-Customer.sync({force: true});
-User.sync({force: true});
+// Reset the tables TODO: Remove in Production
+// Customer.sync({force: true});
+// User.sync({force: true});
 
 // User functions
 function createUser(name, details) {
