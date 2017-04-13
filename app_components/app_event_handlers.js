@@ -19,12 +19,13 @@ function navigateTo(evt) {
   let action = $(evt.target).attr('href') || $(evt.target).parent().attr('href');
   // Split action into primary [0] and secondary [1]
   let route = action.split('/');
+  let params = route.length > 2 ? `${route[1]}/${route[2]}` : route[1];
   console.info(`[Route Called] ${action}`);
   if (typeof routes[route[0]] === 'function') {
     // TODO: ensure user has permission for route
-    routes[route[0]](route[1])
-      .then(()=> {
-        routed(action, startTime);
+    routes[route[0]](params)
+      .then((route)=> {
+        routed(route, startTime);
       })
       .catch((error)=> {
         routed(action, startTime, error);
@@ -42,7 +43,7 @@ function routed(action, startTime, error) {
     if (error === 'noroute') {
       routes.noRoute(action);
     } else {
-      console.error(error);
+      console.warn(error);
     }
     console.info(`[Route Fail] ${action} took ${endTime - startTime}ms`);
   }

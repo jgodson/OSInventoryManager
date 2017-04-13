@@ -56,20 +56,20 @@ function findUser(params) {
   function findByUsername(username) {
     return User
       .findOne({ where: { username: username } })
-      .then((err, user)=> {
-        if (!user) {
-          console.log(`No user with the username ${username} has been found.`);
-        } else {
-          console.log(`Hello ${user.username}!`);
-          console.log(`All attributes of ${user.name}:`, user.get());
-        }
-      });
+      .then((instance)=> {
+        return instance.get();
+      })
+      .catch(errorHandler);
   }
 }
 
 // Customer Functions
 function findCustomerById(id) {
-  return Customer.findOne({ where: { id: id } });
+  return Customer.findOne({ where: { id: id } })
+    .then((instance)=> {
+      return instance.get();
+    })
+    .catch(errorHandler);
 }
 
 function createCustomer(data) {
@@ -91,9 +91,13 @@ function getAllCustomers() {
       });
       return customers;
     })
-    .catch((error)=> {
-      console.error(error);
-    });
+    .catch(errorHandler);
+}
+
+// Error handling function
+
+function errorHandler(error) {
+  return Promise.reject(`[Database Error] ${error}`);
 }
 
 module.exports = {

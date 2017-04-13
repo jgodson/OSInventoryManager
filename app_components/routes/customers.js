@@ -13,11 +13,11 @@ const ROUTES = {
   create: "customers_create",
   details(id) {
     return DB.customers.findById(id)
-      .then((error, customer)=> {
-        if (error) {
-          return Promise.resolve({ error: error });
-        }
+      .then((customer)=> {
         return Promise.resolve({ customer: customer });
+      })
+      .catch((error)=> {
+        return Promise.resolve({ error: error });
       });
   }
 }

@@ -19,8 +19,8 @@ const routes = {
   settings() {
     return goTo('settings');
   },
-  customers(action) {
-    return forward('customers', action);
+  customers(params) {
+    return forward('customers', params);
   },
   login() {
     return goTo('login');
@@ -49,52 +49,66 @@ function noRoute(action) {
 function forward(primary, secondary) {
   // Split into secondary [0] and attribute [1] (id, etc)
   secondary = secondary.split('/');
-  let forwardTo = FORWARDS[primary];
-  if (forwardTo) {
-    if (typeof forwardTo[secondary[0]] === 'string') {
-      return goTo(forwardTo[secondary[0]]);
-    } else if (typeof forwardTo[secondary[0]] === 'function') {
-      // Call function with attribute
-      return forwardTo[secondary[0]](secondary[1])
-        .then((details)=> {
-          return goTo(`${primary}_${secondary[0]}`, details);
-        });
+  let request = secondary.length > 1 ? `${primary}_${secondary[0]}_${secondary[1]}` : `${primary}_${secondary[0]}`;
+  if (history[history.length - 1] !== request) {
+    let forwardTo = FORWARDS[primary];
+    if (forwardTo) {
+      if (typeof forwardTo[secondary[0]] === 'string') {
+        addToHistory(request);
+        return goTo(forwardTo[secondary[0]], undefined, true);
+      } else if (typeof forwardTo[secondary[0]] === 'function') {
+        // Call function with attribute
+        return forwardTo[secondary[0]](secondary[1])
+          .then((details)=> {
+            addToHistory(request);
+            return goTo(`${primary}_${secondary[0]}`, details, true);
+          });
+      } else {
+        return Promise.reject('noroute');
+      }
     } else {
       return Promise.reject('noroute');
     }
   } else {
-    return Promise.reject('noroute');
+    return Promise.reject(`[Info] Already at ${request.replace(/_/g, '/')}`);
   }
 }
 
-function goTo(templateName, attributes) {
+function goTo(templateName, attributes, ignoreHistory) {
   // Don't re-render the same template
-  if (history[history.length - 1] !== templateName) {
+  if (ignoreHistory || history[history.length - 1] !== templateName) {
     return render(templateName, attributes)
       .then((html)=> {
         Visualizer.emit('render-complete', html);
-        addToHistory(templateName);
+
+        // If not already added, add to history and return name of route
+        if (!ignoreHistory) {
+          addToHistory(templateName);
+          return templateName.replace(/_/g, '/');
+        }
+        return history[history.length - 1].replace(/_/g, '/');
       })
       .catch((error)=> {
         return Promise.reject(`[Render Error] ${error}`);
       });
   } else {
-    return Promise.reject(`[Info] Already on ${templateName}`);
+    return Promise.reject(`[Info] Already on ${templateName.replace(/_/g, '/')}`);
   }
 }
 
 function goBack() {
-  let backTo = history[length - 1] || history[0];
+  let backTo = history[length - 1] || history[0] || 'index';
   backTo = backTo.split('_');
-  return routes[backTo[0]](backTo[1]);
+  let params = backTo.length > 2 ? `${backTo[1]}/${backTo[2]}` : backTo[1];
+  return routes[backTo[0]](params);
 }
 
-function addToHistory(templateName) {
+function addToHistory(request) {
   if (history.length < 2) {
-    history.push(templateName);
+      history.push(request);
   } else {
     history.shift();
-    history.push(templateName)
+    history.push(request)
   }
 }
 
