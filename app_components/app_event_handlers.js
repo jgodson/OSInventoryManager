@@ -103,7 +103,6 @@ formActions = {
     realConsole.log(formData);
   },
   customers_create(formData) {
-    realConsole.log(formData);
     DB.customers.create(formData.customer)
       .then(()=> {
         Notifier.emit('show-notification', {
@@ -115,12 +114,54 @@ formActions = {
         return routes['customers']('list');
       })
       .catch((error)=> {
-        console.log(error);
+        console.error(error);
         Notifier.emit('show-notification', {
           type: "warning",
           icon: "error",
           title: "Error Creating Customer!",
           message: `There was a problem creating a new customer. Please try again.`
+        });
+      });
+  },
+  customers_edit(formData) {
+    DB.customers.edit(formData.customer)
+      .then(()=> {
+        Notifier.emit('show-notification', {
+          type: "success",
+          icon: "create",
+          title: "Changes Saved!",
+          message: `Customer details were saved successfully!`
+        });
+        return routes['customers']('list');
+      })
+      .catch((error)=> {
+        console.error(error);
+        Notifier.emit('show-notification', {
+          type: "warning",
+          icon: "error",
+          title: "Problem Saving Changes!",
+          message: `There was a problem saving your changes. Please try again.`
+        });
+      })
+  },
+  customers_delete(formData) {
+    DB.customers.delete(formData.customer.id)
+      .then(()=> {
+        Notifier.emit('show-notification', {
+          type: "success",
+          icon: "delete",
+          title: "Customer Deleted!",
+          message: `Customer was deleted successfully!`
+        });
+        return routes['customers']('list');
+      })
+      .catch((error)=> {
+        console.error(error);
+        Notifier.emit('show-notification', {
+          type: "warning",
+          icon: "error",
+          title: "Problem Deleting Customer!",
+          message: `There was a problem saving your changes. Please try again.`
         });
       })
   },

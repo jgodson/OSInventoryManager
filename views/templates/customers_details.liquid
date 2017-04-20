@@ -2,23 +2,125 @@
 <div class="col-sm-12 col-md-10 col-md-offset-1">
   {% if customer %}
     <div class="well">
-      {% if customer.firstName != blank or customer.lastName != blank %}
-        <h2 class="text-center">{{ customer.firstName }} {{ customer.lastName }}</h2>
-      {% endif %}
-      {% if customer.company %}
-        <h4 class="text-center">{{ customer.company}}</h4>
-      {% endif %}
-      <h5 class="text-center">Customer Since: {{ customer.createdAt | date: '%b %d, %Y'}}</h5>
+      <h1 class="text-center">Customer Details</h1>
+      <form action="customers/edit">
+        <fieldset>
+        <input type="hidden" name="customer-id" value="{{ customer.id }}">
+          {% if customer.firstName != '' or customer.lastName != '' %}
+            <h3 class="details-field text-center">{{ customer.firstName }} {{ customer.lastName }}</h3>
+          {% endif %}
+          <div class="form-group label-floating col-xs-12 col-md-6">
+            <label class="control-label" for="firstName">First Name</label>
+            <input name="customer-firstName" class="form-control" id="firstName" type="text" value="{{ customer.firstName }}">
+          </div>
+          <div class="form-group label-floating col-xs-12 col-md-6">
+            <label class="control-label" for="lastName">Last Name</label>
+            <input name="customer-lastName" class="form-control" id="lastName" type="text" value="{{ customer.lastName }}">
+          </div>
+          {% if customer.company != '' %}
+            <h3 class="details-field text-center">{{ customer.company }}</h3>
+          {% endif %}
+          <div class="form-group label-floating col-xs-12">
+            <label class="control-label" for="company">Company</label>
+            <input name="customer-company" class="form-control" id="company" type="text" value="{{ customer.company }}">
+          </div>
+          <h4 class="details-field text-center">Customer Since: {{ customer.createdAt | date: '%b %d, %Y' }}</h4>
+          {% if customer.primaryContact != '' %}
+            <h4 class="details-field text-center">Contact Name: {{ customer.primaryContact }}</h4>
+          {% endif %}
+          <div class="form-group label-floating col-xs-12 col-md-6">
+            <label class="control-label" for="contact">Primary Contact</label>
+            <input name="customer-primaryContact" class="form-control" id="contact" type="text" value="{{ customer.primaryContact }}">
+          </div>
+          {% if customer.phone != '' %}
+            <h4 class="details-field text-center">Phone: {{ customer.phone }}</h4>
+          {% endif %}
+          <div class="form-group label-floating col-xs-12 col-md-6">
+            <label class="control-label" for="phone">Phone</label>
+            <input name="customer-phone" class="form-control" id="phone" type="tel" value="{{ customer.phone }}">
+          </div>
+          {% if customer.taxExemptions != '' %}
+            <h4 class="details-field text-center">Tax Exemptions: {{ customer.taxExemptions }}</h4>
+          {% endif %}
+          <div class="form-group label-floating col-xs-12">
+            <label class="control-label" for="text-expemptions">Tax Exemptions</label>
+            <input name="customer-taxExemptions" class="form-control" id="tax-expemptions" type="text" value="{{ customer.taxExemptions }}">
+            <span class="help-block">Seperate exemptions with a comma. eg: PST, GST</span>
+          </div>
+          {% if customer.taxNumbers != '' %}
+            <h4 class="details-field text-center">Tax Numbers: {{ customer.taxNumbers }}</h4>
+          {% endif %}
+          <div class="form-group label-floating col-xs-12">
+            <label class="control-label" for="tax-numbers">Tax Numbers</label>
+            <textarea name="customer-taxNumbers" class="form-control" id="tax-numbers">{{ customer.taxNumbers }}</textarea>
+            <span class="help-block">Enter each on its own line (or seperate with a comma). eg: TAX: 000000000, TAX2: 000000000</span>
+          </div>
+          <div class="form-group form-buttons float-right">
+            <a href="goBack" type="button" class="btn btn-default">Go Back</a>
+            <a href="#" type="button" id="edit-button" class="btn btn-primary">Edit</a>
+            <a href="#" type="button" id="delete-button" class="btn btn-danger">Delete</a>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </fieldset>
+      </form>
+      <form id="delete-form" class="hidden" action="customers/delete">
+        <input type="hidden" name="customer-id" value="{{ customer.id }}">
+      </form>
     </div>
   {% else %}
     <div class="alert alert-danger">
       There was a problem retreiving customer details. Please try again.
     </div>
   {% endif %}
-  <div class="form-group float-right">
-    <a href="goBack" type="button" class="btn btn-default">Go Back</a>
-    {% if customer %}
-      <a href="customers/edit/{{ customer.id }}" type="button" class="btn btn-primary">Edit</button>
-    {% endif %}
-  </div>
 </div>
+<script class="page-script">
+  $('.form-group:not(.form-buttons), button[type="submit"], #delete-button').hide();
+
+  $('#edit-button').on('click', enterEditMode);
+  $('#delete-button').on('click', deleteCustomer);
+
+  function enterEditMode() {
+    let originalText = $('a[href="goBack"]').text();
+    $('.details-field, #edit-button').hide();
+    $('button[type="submit"], #delete-button').show();
+    $('.form-group').slideDown();
+    $('a[href="goBack"]')
+      .text('Cancel')
+      .on('click', (evt)=> {
+        evt.preventDefault();
+        evt.stopPropagation();
+        exitEditMode();
+      });
+
+    function exitEditMode() {
+      $('.form-group:not(.form-buttons), button[type="submit"], #delete-button').hide();
+      $('.details-field, #edit-button').slideDown();
+      $('a[href="goBack"]')
+        .text(originalText)
+        .off();
+    }
+  }
+
+  function deleteCustomer() {
+    confirmDeletion()
+      .then((response)=> {
+        if (response == 1) {
+          $('#delete-form').submit();
+        }
+      });
+  }
+
+  function confirmDeletion() {
+    return new Promise((resolve, reject)=> {
+      dialog.showMessageBox({
+        type: 'warning',
+        buttons: ["Cancel", "Delete"],
+        defaultId: 0,
+        title: "Confirm deletion",
+        detail: "This will permanantly delete this customer and any information associated with them. Do you want to continue?"
+      }, (response)=> {
+        resolve(response);
+      });
+    });
+  }
+</script>

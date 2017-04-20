@@ -1,4 +1,5 @@
 const path = require('path');
+const dialog = require('electron').remote.dialog;
 const config = require(path.join(__dirname, '../app_components/app_config'));
 const handlers = require(path.join(__dirname, `../${config.paths.components_folder}/app_event_handlers`));
 const Visualizer = require(path.join(__dirname, `../${config.paths.components_folder}/Visualizer`));

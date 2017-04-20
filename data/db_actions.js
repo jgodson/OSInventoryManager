@@ -25,17 +25,16 @@ function createUser(name, details) {
     username = name.replace(/\b\s+\b/g, '').toLowerCase();
   }
   name = name.trim().split(' ');
-  // TODO: Remove force for production
-  User.sync().then(()=> {
-    // Table created
-    return User.create({
-      username: username,
-      firstName: name[0],
-      lastName: name[1] || '',
-      isAdmin: details.isAdmin || false,
-      restrictions: details.restrictions || ''
+  User.sync()
+    .then(()=> {
+      return User.create({
+        username: username,
+        firstName: name[0],
+        lastName: name[1] || '',
+        isAdmin: details.isAdmin || false,
+        restrictions: details.restrictions || ''
+      });
     });
-  });
 }
 
 function findUser(params) {
@@ -55,7 +54,9 @@ function findUser(params) {
 
   function findByUsername(username) {
     return User
-      .findOne({ where: { username: username } })
+      .findOne({
+        where: { username: username } 
+      })
       .then((instance)=> {
         return instance.get();
       })
@@ -65,7 +66,9 @@ function findUser(params) {
 
 // Customer Functions
 function findCustomerById(id) {
-  return Customer.findOne({ where: { id: id } })
+  return Customer.findOne({ 
+      where: { id: id } 
+    })
     .then((instance)=> {
       return instance.get();
     })
@@ -73,14 +76,41 @@ function findCustomerById(id) {
 }
 
 function createCustomer(data) {
-  return Customer.sync().then(()=> {
-    // Table created
-    return Customer.create({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      company: data.company
-    });
-  });
+  return Customer.sync()
+    .then(()=> {
+      return Customer.create({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        company: data.company,
+        primaryContact: data.primaryContact,
+        phone: data.phone,
+        taxExemptions: data.taxExemptions,
+        taxNumbers: data.taxNumbers
+      });
+    })
+    .catch(errorHandler);
+}
+
+function editCustomer(data) {
+  return Customer.update({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    company: data.company,
+    primaryContact: data.primaryContact,
+    phone: data.phone,
+    taxExemptions: data.taxExemptions,
+    taxNumbers: data.taxNumbers
+  }, {
+    where: { id: data.id }
+  })
+  .catch(errorHandler);
+}
+
+function deleteCustomer(id) {
+  return Customer.destroy({
+    where: { id: id }
+  })
+  .catch(errorHandler);
 }
 
 function getAllCustomers() {
@@ -95,7 +125,6 @@ function getAllCustomers() {
 }
 
 // Error handling function
-
 function errorHandler(error) {
   return Promise.reject(`[Database Error] ${error}`);
 }
@@ -107,6 +136,8 @@ module.exports = {
   customers: {
     findById: findCustomerById,
     create: createCustomer,
+    edit: editCustomer,
+    delete: deleteCustomer,
     findAll: getAllCustomers
   }
 }

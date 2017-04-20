@@ -14,7 +14,19 @@ const Customer = sequelize.define('customer', {
       type: Sequelize.STRING
     }, 
     company: {
-      type: Sequelize.BOOLEAN 
+      type: Sequelize.STRING
+    }, 
+    phone: {
+      type: Sequelize.STRING
+    }, 
+    primaryContact: {
+      type: Sequelize.STRING
+    }, 
+    taxExemptions: {
+      type: Sequelize.STRING
+    }, 
+    taxNumbers: {
+      type: Sequelize.STRING
     }
   }, {
   freezeTableName: true // Model tableName will be the same as the model name

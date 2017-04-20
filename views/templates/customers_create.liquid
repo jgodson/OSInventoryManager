@@ -3,21 +3,39 @@
     <h1 class="text-center">New Customer</h1>
     <form action="customers/create">
       <fieldset>
-        <div class="form-group label-floating">
+        <div class="form-group label-floating col-xs-12 col-md-6">
           <label class="control-label" for="firstName">First Name</label>
           <input name="customer-firstName" class="form-control" id="firstName" type="text">
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group label-floating col-xs-12 col-md-6">
           <label class="control-label" for="lastName">Last Name</label>
           <input name="customer-lastName" class="form-control" id="lastName" type="text">
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group label-floating col-xs-12">
           <label class="control-label" for="company">Company</label>
           <input name="customer-company" class="form-control" id="company" type="text">
         </div>
+        <div class="form-group label-floating col-xs-12 col-md-6">
+          <label class="control-label" for="contact">Primary Contact</label>
+          <input name="customer-primaryContact" class="form-control" id="contact" type="text">
+        </div>
+        <div class="form-group label-floating col-xs-12 col-md-6">
+          <label class="control-label" for="phone">Phone</label>
+          <input name="customer-phone" class="form-control" id="phone" type="tel">
+        </div>
+        <div class="form-group label-floating col-xs-12">
+          <label class="control-label" for="text-expemptions">Tax Exemptions</label>
+          <input name="customer-taxExemptions" class="form-control" id="tax-expemptions" type="text">
+          <span class="help-block">Seperate exemptions with a comma. eg: PST, GST</span>
+        </div>
+        <div class="form-group label-floating col-xs-12">
+          <label class="control-label" for="tax-numbers">Tax Numbers</label>
+          <textarea name="customer-taxNumbers" class="form-control" id="tax-numbers"></textarea>
+          <span class="help-block">Enter each on its own line (or seperate with a comma). eg: TAX: 000000000, TAX2: 000000000</span>
+        </div>
         <div class="form-group float-right">
-            <a href="cancel" type="button" class="btn btn-default">Cancel</a>
-            <button type="submit" class="btn btn-primary">Create</button>
+          <a href="cancel" type="button" class="btn btn-default">Cancel</a>
+          <button type="submit" class="btn btn-primary">Create</button>
         </div>
       </fieldset>
     </form>

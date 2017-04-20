@@ -16,7 +16,13 @@
           {% for customer in options.customer_list %}
             <tr>
               <td>{{ customer.id }}</td>
-              <td colspan="2">{{ customer.firstName }} {{ customer.lastName }}{% if customer.company %} - {{ customer.company }}{% endif %}</td>
+              <td colspan="2">
+                {% if customer.firstName or customer.lastName %}
+                  {{ customer.firstName }} {{ customer.lastName }}
+                  {% if customer.company %} - {% endif %}
+                {% endif %}
+                {% if customer.company %}{{ customer.company }}{% endif %}
+              </td>
               <td>{{ customer.createdAt | date: '%b %d, %Y'}}</td>
               <td>{{ customer.total_spent }}</td>
               <td>{{ customer.current_owing }}</td>

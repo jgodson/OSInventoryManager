@@ -130,6 +130,10 @@ form.navbar-form.navbar-right .btn-default:hover {
   text-decoration: none !important;
 }
 
+.hidden {
+  display: none;
+}
+
 /* <------ Smaller Window Sizes ------> */
 @media screen and (max-width: 767px) {
   .action__buttons {
