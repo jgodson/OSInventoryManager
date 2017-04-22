@@ -1,5 +1,8 @@
 node_modules
+app/node_modules
+dist
 yarn.lock
+.yarnclean
 npm-debug.log
 .DS_Store
-data/app_data
+app/data/app_data

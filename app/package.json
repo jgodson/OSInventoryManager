@@ -4,31 +4,18 @@
   "description": "An application to keep track of parts inventory, invoices, etc",
   "main": "main.js",
   "scripts": {
-    "start": "./node_modules/.bin/electron app/.",
+    "postinstall": "install-app-deps",
+    "start": "./node_modules/.bin/electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "yarn build --dir",
     "dist": "yarn build"
   },
   "author": "Jason Godson",
   "license": "GPL-3.0",
-  "build": {
-    "appId": "com.jasongodson.os-inventory-manager",
-    "mac": {
-      "category": "public.app-category.business"
-    },
-    "files": [
-      "!app/data/app_data"
-    ]
-  },
   "dependencies": {
     "jquery": "^3.2.1",
     "sequelize": "^3.30.4",
     "shopify-liquid": "^1.7.9",
     "sqlite3": "^3.1.8"
-  },
-  "devDependencies": {
-    "electron": "^1.6.5",
-    "electron-builder": "^17.0.1",
-    "electron-reload": "^1.1.0"
   }
 }
