@@ -1,9 +1,10 @@
 const path = require('path');
 const fs = require('fs');
 const config = require(path.join(__dirname, 'app_config'));
+const { USER_DATA_PATH } = require(path.join(__dirname, 'paths')); 
 
 const PATHMAP = {
-  'settings_data.json': `./${config.paths.app_data}`
+  'settings_data.json': USER_DATA_PATH
 }
 
 // Keep track of files currently being written
@@ -62,7 +63,7 @@ function startWrite(fileInfo) {
     }
 
     // Write the file
-    fs.writeFile(path.resolve(`${PATHMAP[fileInfo.fileName]}/${fileInfo.fileName}`), fileData, err => {
+    fs.writeFile(path.join(PATHMAP[fileInfo.fileName], fileInfo.fileName), fileData, (err)=> {
       if (err) {
         console.error(err);
         return;

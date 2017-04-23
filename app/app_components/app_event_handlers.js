@@ -1,9 +1,9 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
-const DB = require(`../${config.paths.data_folder}/db_actions`);
+const DB = require(path.join(__dirname, `../${config.paths.data_folder}/db_actions`));
 const remote = require('electron').remote;
-const User = require(`../${config.paths.models_folder}/user`);
-const routes = require(`../${config.paths.components_folder}/router`);
+const User = require(path.join(__dirname, `../${config.paths.models_folder}/user`));
+const routes = require(path.join(__dirname, `../${config.paths.components_folder}/router`));
 const render = require(path.join(__dirname, `render`));
 const file = require(path.join(__dirname, 'file_writer'));
 

@@ -2,14 +2,15 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
-// Find out wether we are in development or production TODO: find a better way
-try {
-  // For auto reload during development
-  require('electron-reload')(__dirname);
-  process.env['NODE_ENV'] = 'development';
-} catch (e) {
-  process.env['NODE_ENV'] = 'production'
+// Ren electron reload if in development
+if (process.env.NODE_ENV === 'development') {
+  if (process.env.RELOAD) {
+    require('electron-reload')(__dirname);
+  }
+} else {
+  process.env.NODE_ENV = 'production';
 }
+
 
 // Functions to execute when app loads (check for needed files, etc)
 require(path.join(__dirname, 'app_components/before_load'));
@@ -29,7 +30,12 @@ function createWindow () {
     slashes: true,
   }));
 
-  // Open the DevTools.
+  if (process.env.NODE_ENV === 'development') {
+    // Open the DevTools.
+    win.webContents.openDevTools();
+  }
+
+  // TODO: DEBUGGING ONLY REMOVE LATER
   win.webContents.openDevTools();
 
   // Emitted when the window is closed.

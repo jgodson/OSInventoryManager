@@ -1,21 +1,22 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../app_components/app_config'));
 
-const queryOpts = {
-  force: process.env['NODE_ENV'] === 'production' ? false : true
+const QUERY_OPTS = {
+  force: process.env.DB_CLEAN ? true : false
 }
 
 // Database
-const DB = require('./db');
+const DB = require(path.join(__dirname, 'db'));
 
 // Models
-const User = require(`../${config.paths.models_folder}/user`);
-const Customer = require(`../${config.paths.models_folder}/customer`);
+const User = require(path.join(__dirname, `../${config.paths.models_folder}/user`));
+const Customer = require(path.join(__dirname, `../${config.paths.models_folder}/customer`));
 
-// Reset the tables TODO: Remove in Production
-// Customer.sync({force: true});
-// User.sync({force: true});
+// Create tables if they don't exist
+Customer.sync(QUERY_OPTS);
+User.sync(QUERY_OPTS);
 
+// TODO SPLIT INTO THEIR OWN FILES
 // User functions
 function createUser(name, details) {
   let username;
@@ -130,7 +131,7 @@ function errorHandler(error) {
 }
 
 module.exports = {
-  user: {
+  users: {
     create: createUser
   },
   customers: {

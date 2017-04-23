@@ -1,13 +1,16 @@
 {
-  "name": "OSInventoryManager",
+  "name": "os-inventory-manager",
+  "productName": "OS Inventory Manager",
   "version": "0.0.1",
   "description": "An application to keep track of parts inventory, invoices, etc",
   "main": "main.js",
   "scripts": {
-    "start": "./node_modules/.bin/electron app/.",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "yarn build --dir",
-    "dist": "yarn build"
+    "start": "NODE_ENV=development ./node_modules/.bin/electron app/.",
+    "start-clean": "NODE_ENV=development DB_CLEAN=true ./node_modules/.bin/electron app/.",
+    "start-reload": "NODE_ENV=development RELOAD=true ./node_modules/.bin/electron app/.",
+    "clean-dist": "rm -rf dist",
+    "build-win": "yarn build --platform=win-64",
+    "release": "yarn build"
   },
   "author": "Jason Godson",
   "license": "GPL-3.0",
@@ -16,8 +19,14 @@
     "mac": {
       "category": "public.app-category.business"
     },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
+    },
     "files": [
-      "!app/data/app_data"
+      "!data/app_data"
     ]
   },
   "dependencies": {

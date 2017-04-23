@@ -1,17 +1,15 @@
 const path = require('path');
 const config = require(path.join(__dirname, '../config/config.json'));
+const { USER_DATA_PATH } = require(path.join(__dirname, `../${config.paths.components_folder}/paths`)); 
 
 const Sequelize = require('sequelize');
-const sequelizeDB = new Sequelize(null, null, null, {
+
+// TODO: Allow for renaming, connecting to cloud db with url
+const sequelizeDB = new Sequelize({
   host: config.database.host,
   dialect: config.database.dialect,
-  pool: {
-    max: 5,
-    min: 1,
-    idle: 10000
-  },
   // SQLite only
-  storage: `./${config.paths.app_data}/${config.database.name}`
+  storage: path.join(USER_DATA_PATH, `/${config.database.name}`)
 });
 
 module.exports = sequelizeDB;
