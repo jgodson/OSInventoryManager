@@ -3,31 +3,48 @@
   "productName": "OS Inventory Manager",
   "version": "0.0.1",
   "description": "An application to keep track of parts inventory, invoices, etc",
+  "author": {
+    "name": "Jason Godson",
+    "email": "jason@jasongodson.com",
+    "url": "http://www.jasongodson.com"
+  },
+  "license": "GPL-3.0",
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=development ./node_modules/.bin/electron app/.",
     "start-clean": "NODE_ENV=development DB_CLEAN=true ./node_modules/.bin/electron app/.",
     "start-reload": "NODE_ENV=development RELOAD=true ./node_modules/.bin/electron app/.",
     "clean-dist": "rm -rf dist",
-    "build-win": "yarn build --platform=win-64",
-    "release": "yarn build"
+    "build-win": "/Users/jasongodson/Documents/projects/partsapp/node_modules/.bin/build --win",
+    "build-linux": "/Users/jasongodson/Documents/projects/partsapp/node_modules/.bin/build --linux",
+    "release": "/Users/jasongodson/Documents/projects/partsapp/node_modules/.bin/build -mwl"
   },
-  "author": "Jason Godson",
-  "license": "GPL-3.0",
   "build": {
     "appId": "com.jasongodson.os-inventory-manager",
     "mac": {
-      "category": "public.app-category.business"
+      "category": "public.app-category.business",
+      "target": "dmg"
     },
     "win": {
-      "target": "nsis"
+      "target": {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
     },
     "linux": {
+      "icon": "build",
       "target": "deb"
+    },
+    "nsis": {
+      "runAfterFinish": false
     },
     "files": [
       "!data/app_data"
-    ]
+    ],
+    "npmSkipBuildFromSource": true
   },
   "dependencies": {
     "jquery": "^3.2.1",
@@ -36,8 +53,9 @@
     "sqlite3": "^3.1.8"
   },
   "devDependencies": {
+    "csscomb": "^4.0.1",
     "electron": "^1.6.5",
-    "electron-builder": "^17.0.1",
+    "electron-builder": "^17.0.3",
     "electron-reload": "^1.1.0"
   }
 }

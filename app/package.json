@@ -4,7 +4,11 @@
   "version": "0.0.1",
   "description": "An application to keep track of parts inventory, invoices, etc",
   "main": "main.js",
-  "author": "Jason Godson",
+  "author": {
+    "name": "Jason Godson",
+    "email": "jason@jasongodson.com",
+    "url": "http://www.jasongodson.com"
+  },
   "license": "GPL-3.0",
   "dependencies": {
     "jquery": "^3.2.1",

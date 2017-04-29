@@ -74,7 +74,7 @@
   {% endif %}
 </div>
 <script class="page-script">
-  $('.form-group:not(.form-buttons), button[type="submit"], #delete-button').hide();
+  $('.form-group:not(.form-buttons), button[type="submit"]:not(.search-btn), #delete-button').hide();
 
   $('#edit-button').on('click', enterEditMode);
   $('#delete-button').on('click', deleteCustomer);
