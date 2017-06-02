@@ -98,6 +98,9 @@ formActions = {
       .catch((e)=> {
         realConsole.log(e);
       });
+
+      // Send back to home
+      routes.index();
   },
   users_create(formData) {
     realConsole.log(formData);

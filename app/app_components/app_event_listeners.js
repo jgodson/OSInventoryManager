@@ -118,6 +118,7 @@ $(document).on('submit', 'form', function(evt) {
   evt.preventDefault();
   let $form = $(this).closest('form');
   let action = $form.attr('action');
+  $form.find('input[type="checkbox"]').prop('checked', true);
   let data = formToJSON($form.serializeArray());
   handlers.formSubmit(action, data);
 
@@ -147,7 +148,7 @@ $(document).on('click', '[type="submit"]:not(input, button)', function() {
 // Toggle Checkboxes and set value attribute
 $(document).on('click', '.checkbox', function() {
   let checkbox = this.querySelector('input');
-  if (checkbox.value === "true") {
+  if (checkbox.checked) {
     checkbox.value = "false";
     checkbox.checked = false;
   } else {

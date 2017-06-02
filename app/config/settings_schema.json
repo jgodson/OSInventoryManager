@@ -54,7 +54,7 @@
   }, {
     "type": "checkbox",
     "id": "manually_dismiss",
-    "label": "Always Manually Dismiss",
+    "label": "Manually Dismiss Notifications",
     "info": "Require clicking the X or the 'CLOSE' button on notifications before they disappear",
     "default": "false"
   }, {
