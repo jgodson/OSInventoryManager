@@ -64,4 +64,37 @@
     "info": "How long to show for (in seconds)",
     "default": "6"
   }]
+}, {
+  "name": "taxes",
+  "settings": [{
+    "type": "header",
+    "content": "Set your tax names and percentages here"
+  }, {
+    "type": "text",
+    "id": "tax_1",
+    "label": "Tax 1 Name"
+  }, {
+    "type": "number",
+    "id": "tax_1_percent",
+    "label": "Tax 1 Percentage"
+  }, {
+    "type": "text",
+    "id": "tax_2",
+    "label": "Tax 2 Name"
+  }, {
+    "type": "number",
+    "id": "tax_2_percent",
+    "label": "Tax 2 Percentage"
+  }]
+}, {
+  "name": "Inventory",
+  "settings": [{
+    "type": "header",
+    "content": "All settings related to inventory"
+  }, {
+    "type": "number",
+    "id": "markup_percent",
+    "label": "Default Markup Percentage",
+    "info": "New inventory will be marked up by this percentage"
+  }]
 }]

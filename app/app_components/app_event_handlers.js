@@ -68,7 +68,8 @@ function showNotification(details = {}) {
   render('notification', details)
     .then((html)=> {
       Notifier.emit('rendered-notification', html, details.id);
-    }).catch((err)=> {
+    })
+    .catch((err)=> {
       console.error(`[Render Error] ${err}`);
     });
 }
