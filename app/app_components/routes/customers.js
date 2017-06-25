@@ -10,7 +10,9 @@ const ROUTES = {
         return Promise.resolve({ error: error });
       });
   },
+
   create: "customers_create",
+  
   details(id) {
     return DB.customers.findById(id)
       .then((customer)=> {

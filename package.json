@@ -14,6 +14,7 @@
     "start": "NODE_ENV=development ./node_modules/.bin/electron app/.",
     "start-clean": "NODE_ENV=development DB_CLEAN=true ./node_modules/.bin/electron app/.",
     "start-reload": "NODE_ENV=development RELOAD=true ./node_modules/.bin/electron app/.",
+    "rebuild": "./node_modules/.bin/electron-rebuild",
     "clean-dist": "rm -rf dist",
     "build-win": "/Users/jasongodson/Documents/projects/partsapp/node_modules/.bin/build --win",
     "build-linux": "/Users/jasongodson/Documents/projects/partsapp/node_modules/.bin/build --linux",
@@ -53,6 +54,7 @@
     "sqlite3": "^3.1.8"
   },
   "devDependencies": {
+    "electron-rebuild": "^1.5.11",
     "csscomb": "^4.0.1",
     "electron": "^1.6.5",
     "electron-builder": "^17.0.3",

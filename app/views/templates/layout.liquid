@@ -1,8 +1,6 @@
 {%- assign user = options.user -%}
 {%- assign logged_in = false -%}
-{%- if user -%}
-  {%- assign logged_in = true -%}
-{%- elsif settings.users.required == "false" -%}
+{%- if user or settings.users.required == "false"-%}
   {%- assign logged_in = true -%}
 {% endif %}
 
